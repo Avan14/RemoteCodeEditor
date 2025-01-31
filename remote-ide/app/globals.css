@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Redwing-M';
+  src: url('../public/fonts/Redwing-Medium.otf') format('opentype');
+  font-weight: normal;  
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Redwing-L';
+  src: url('../public/fonts/Redwing-Light.otf') format('opentype');
+  font-weight: normal;  
+  font-style: normal;
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+}
