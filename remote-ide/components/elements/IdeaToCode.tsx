@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const options = [
   { name: "Online shop", icon: "🛍️" },
@@ -45,13 +46,18 @@ export default function IdeaToApp() {
             </div>
           </div>
           <div className="mt-4 flex justify-between border-t-2 border-gray-700 pt-5">
-            <Button variant="ghost" className="bg-gray-700 text-white  hover:bg-gray-600">
+            <Button
+              variant="ghost"
+              className="bg-gray-700 text-white  hover:bg-gray-600"
+            >
               {" "}
               📎Attach
             </Button>
-            <Button className="bg-[#1d4ed8] text-xl font-bold hover:bg-[#1d6ed8] text-white">
-              🚀 Start building
-            </Button>
+            <Link href="/CodeEditor">
+              <Button className="bg-[#1d4ed8] text-xl font-bold hover:bg-[#1d6ed8] text-white">
+                🚀 Start building
+              </Button>
+            </Link>
           </div>
         </CardContent>
       </Card>

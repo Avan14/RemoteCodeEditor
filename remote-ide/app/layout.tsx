@@ -1,6 +1,8 @@
+"use client"
 
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { motion } from "framer-motion";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,7 +26,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2}}
+    >
+      {children}
+    </motion.div>
       </body>
     </html>
   );

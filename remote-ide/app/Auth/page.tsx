@@ -25,7 +25,7 @@ import { motion } from 'framer-motion';
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 1 }}
+      transition={{ duration: .3 }}
       >
     <div className="flex min-h-screen">
       {/* Left Panel - Image */}
