@@ -1,7 +1,7 @@
 import axios from "axios";
 import { LANGUAGE_VERSIONS } from "./constants";
 
-const API = axios.create({
+const ExecuteCodeAPI = axios.create({
   baseURL: "https://emkc.org/api/v2/piston",
 });
 
@@ -17,7 +17,7 @@ export const ExecuteCode = async (
       throw new Error("Unsupported language selected.");
     }
 
-    const response = await API.post("/execute", {
+    const response = await ExecuteCodeAPI.post("/execute", {
       language,
       version: LANGUAGE_VERSIONS[language],
       files: [{ content: SourceCode }],

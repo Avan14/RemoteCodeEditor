@@ -6,21 +6,25 @@ import { Terminal, Folder, Users, Plus } from "lucide-react";
 import Editor from "@monaco-editor/react";
 import { Header } from "./Header";
 import { CODE_SNIPPETS, FILE_NAMES, THEMES } from "./constants";
+import {Chatbot} from "./chatbot";
+
 
 export interface HeaderProps {
   code: string;
-  setLanguage: React.Dispatch<React.SetStateAction<keyof typeof FILE_NAMES>>;
+  setLanguage: React.Dispatch<React.SetStateAction<string>>;
   Language: string;
   setoutput: (output: string) => void;
   seterror: (error: boolean) => void;
 }
 
 export default function CodeEditor() {
-  const [Language, setLanguage] = useState<keyof typeof FILE_NAMES>("cpp");
+  const [Language, setLanguage] = useState<string>("");
   const [code, setCode] = useState<string>("");
   const editorRef = useRef<any>(null);
   const [output, setOutput] = useState("Terminal output will appear here...");
   const [error, setError] = useState(false);
+
+  
   useEffect(() => {
     //@ts-ignore
     setCode(CODE_SNIPPETS[Language]);
@@ -56,7 +60,7 @@ export default function CodeEditor() {
                   </div>
                   <div className="text-sm text-gray-400">
                     <div className="cursor-pointer hover:bg-gray-700 p-1 rounded">
-                      {FILE_NAMES[Language]}
+                      app
                     </div>
                   </div>
                 </div>
@@ -65,23 +69,7 @@ export default function CodeEditor() {
               <PanelResizeHandle className="h-1 bg-gray-700 hover:bg-blue-500 transition-colors" />
               {/* Group Chat */}
               <Panel defaultSize={75} minSize={50}>
-                <div className="h-full bg-gray-800 p-4 border-b border-gray-700">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <Users className="h-4 w-4 text-gray-400" />
-                      <span className="font-medium">Group Chat</span>
-                    </div>
-                    <button
-                      className="p-1 hover:bg-gray-700 rounded-md text-blue-400"
-                      title="Add Group"
-                    >
-                      <Plus className="h-4 w-4" />
-                    </button>
-                  </div>
-                  <div className="p-4 flex-1 overflow-y-auto text-gray-400 text-sm">
-                    <div className="italic">No group chats available.</div>
-                  </div>
-                </div>
+               <Chatbot code ={code} />
               </Panel>
             </PanelGroup>
           </Panel>
@@ -112,7 +100,7 @@ export default function CodeEditor() {
                     <Terminal className="h-4 w-4 text-gray-400" />
                     <span className="font-medium">Terminal</span>
                   </div>
-                  <pre className="font-mono text-sm text-gray-300 whitespace-pre-wrap overflow-y-auto h-full scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900">
+                  <pre className="font-mono text-sm text-gray-300 whitespace-pre-wrap overflow-y-auto h-full ">
                     {error ? (
                       <div className="text-red-500">{output}</div>
                     ) : (

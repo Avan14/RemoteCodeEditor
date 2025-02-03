@@ -30,13 +30,13 @@ export const CODE_SNIPPETS = {
   ruby: `def greet(name)\n\tputs "Hello, #{name}!"\nend\n\ngreet("Avan")\n`,
   rust: `fn greet(name: &str) {\n\tprintln!("Hello, {}!", name);\n}\n\nfn main() {\n\tgreet("Avan");\n}\n`,
   kotlin: `fun greet(name: String) {\n\tprintln("Hello, $name!")\n}\n\ngreet("Avan")\n`,
-  swift: `func greet(name: String) {\n\tprint("Hello, \(name)!")\n}\n\ngreet("Avan")\n`,
+  swift: `func greet(name: String) {\n\tprint("Hello,\  (name)!")\n}\n\ngreet(name:"Avan")\n`,
   sqlite3: `CREATE TABLE greeting (\n\tid INTEGER PRIMARY KEY,\n\tmessage TEXT\n);\n\nINSERT INTO greeting (message) VALUES ('Hello, Avan!');\n`,
   c: `#include <stdio.h>\n\nint main() {\n\tprintf("Hello, Avan!\\n");\n\treturn 0;\n}\n`,
   powershell: `$name = "Avan"\nWrite-Host "Hello, $name!"\n`,
   bash: `#!/bin/bash\n\nname="Avan"\necho "Hello, $name!"\n`,
-  matl: `disp('Hello, Avan!')\n`,
-  dart: `void greet(String name) {\n\tprint("Hello, $name!");\n}\n\ngreet("Avan");\n`,
+  matl: `'Hello World'\n`,
+  dart: `void main() {\n\tprint('Hello, World!');\n}\n\n\n`,
 };
 
 export const FILE_NAMES = {
@@ -61,5 +61,7 @@ export const FILE_NAMES = {
 };
 
 export const THEMES=[
-  "vs-dark","vs-light","hc-black"
+  "vs-dark",
+  "vs-light",
+  "hc-black"
 ]
