@@ -9,25 +9,25 @@ import { Play, Settings, Code2 } from "lucide-react";
 import { useState } from "react";
 import { HeaderProps } from "./page";
 import { ExecuteCode } from "./api";
-import { useToast } from "@/hooks/use-toast";
 import { LANGUAGE_VERSIONS } from "./constants";
+import Link from "next/link";
 
 const languageOptions = Object.keys(LANGUAGE_VERSIONS).map((key) => ({
   value: key,
-  label: `${key.charAt(0).toUpperCase() + key.slice(1)} (${LANGUAGE_VERSIONS[key as keyof typeof LANGUAGE_VERSIONS]})`,
+  label: `${key.charAt(0).toUpperCase() + key.slice(1)} (${
+    LANGUAGE_VERSIONS[key as keyof typeof LANGUAGE_VERSIONS]
+  })`,
 }));
-
 
 export const Header = ({
   code,
   setLanguage,
   Language,
   setoutput,
-  seterror
+  seterror,
 }: HeaderProps) => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(false);
-  const { toast } = useToast();
 
   const handleRun = async () => {
     if (!Language || !code) {
@@ -36,13 +36,13 @@ export const Header = ({
       setTimeout(() => {
         setAlert(false);
       }, 3000);
-      setoutput( "Please select a language and write some code");
+      setoutput("Please select a language and write some code");
       return;
     }
     setLoading(true);
     try {
       // @ts-ignore
-      const Sourcecode = await ExecuteCode(Language, code,seterror);
+      const Sourcecode = await ExecuteCode(Language, code, seterror);
       setoutput(Sourcecode);
     } catch (error) {
       setoutput("Error: " + error);
@@ -57,7 +57,11 @@ export const Header = ({
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <Code2 className="h-6 w-6 text-blue-400" />
-          <h1 className="text-xl font-bold">EDITOR</h1>
+          <Link href="/">
+          <h1 className="text-xl font-bold">
+            EDITOR
+          </h1>
+          </Link>
         </div>
         <div className="flex items-center space-x-4">
           <Select value={Language} onValueChange={setLanguage}>

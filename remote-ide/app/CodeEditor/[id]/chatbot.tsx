@@ -69,7 +69,7 @@ export function Chatbot({ code }: ChatbotProps) {
   };
 
   return (
-    <div className="h-full bg-gray-50 flex items-center justify-center p-2">
+    <div className="h-full flex items-center justify-center p-2">
       <div className="w-full h-full max-w-2xl bg-white rounded-2xl shadow-xl overflow-hidden">
         {/* Chat Header */}
         <div className="bg-blue-600 p-4 h-1/5">
@@ -113,7 +113,7 @@ export function Chatbot({ code }: ChatbotProps) {
                       : "bg-gray-300 text-gray-800"
                   }`}
                 >
-                  {/* Use ReactMarkdown to render message.text so that markdown elements (like code blocks) are properly formatted */}
+                  {/* Using ReactMarkdown to render message.*/}
                   <ReactMarkdown className="prose prose-sm">
                     {message.text}
                   </ReactMarkdown>
