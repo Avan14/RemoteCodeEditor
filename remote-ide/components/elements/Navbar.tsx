@@ -26,6 +26,7 @@ export default function Navbar() {
       }, 2000);
     }
   };
+
   const logouthandler = async () => {
     try {
       await clerk.signOut();
@@ -33,17 +34,17 @@ export default function Navbar() {
       console.error("Error signing out:", error);
     }
   };
+
+  // Check sessionStorage to show welcome popup only once per session
   useEffect(() => {
-    if (
-      isLoaded &&
-      isSignedIn &&
-      !sessionStorage.getItem("welcomePopupShown")
-    ) {
+    if (isLoaded && isSignedIn && !sessionStorage.getItem("welcomePopupShown")) {
       setShowWelcomePopup(true);
       sessionStorage.setItem("welcomePopupShown", "true");
       setTimeout(() => setShowWelcomePopup(false), 2000);
     }
   }, [isLoaded, isSignedIn]);
+
+  console.log(clerk.loaded);
 
   return (
     <>
@@ -110,25 +111,21 @@ export default function Navbar() {
             </Button>
           </Link>
           {isSignedIn ? (
-              <DropdownMenu >
+            <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button className="bg-black w-6" >
+                <Button className="bg-black w-6">
                   <Avatar className="w-9 h-9 text-black text-xl">
-                    <AvatarFallback>
-                    A
-                    </AvatarFallback>
+                    <AvatarFallback>A</AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-        
+
               <DropdownMenuContent align="end" className="w-48">
                 <DropdownMenuItem asChild>
-                  <a className="text-black">{"User"}</a>
+                  <a className="text-black">User</a>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <a href="/service" className="text-gray-700">
-                    Services
-                  </a>
+                  <a className="text-black">Services</a>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild onClick={logouthandler}>
                   <a className="text-gray-700">Logout</a>

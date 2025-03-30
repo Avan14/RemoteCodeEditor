@@ -8,7 +8,7 @@ import { Header } from "./Header";
 import { CODE_SNIPPETS, FILE_NAMES, THEMES } from "./constants";
 import { Chatbot } from "./chatbot";
 import { Button } from "@/components/ui/button";
-import { FileExplorer } from "./FileExplorer";
+import { FileExplorer } from "./FileExplorer/FileExplorer";
 
 export interface HeaderProps {
   code: string;
