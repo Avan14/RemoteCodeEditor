@@ -8,6 +8,7 @@ import { Header } from "./Header";
 import { CODE_SNIPPETS, FILE_NAMES, THEMES } from "./constants";
 import { Chatbot } from "./chatbot";
 import { Button } from "@/components/ui/button";
+import { FileExplorer } from "./FileExplorer";
 
 export interface HeaderProps {
   code: string;
@@ -52,28 +53,18 @@ export default function CodeEditor() {
               {/* File Explorer */}
 
               <Panel defaultSize={25} minSize={25}>
-                <div className="h-full   p-4">
-                  <div className="flex items-center space-x-2 mb-4">
-                    <Folder className="h-4 w-4 text-gray-400" />
-                    <span className="font-medium">Files</span>
-                  </div>
-                  <div className="text-sm text-gray-400">
-                    <div className="cursor-pointer hover:bg-gray-700 p-1 rounded">
-                      app
-                    </div>
-                  </div>
-                </div>
+                <FileExplorer></FileExplorer>
               </Panel>
 
               <PanelResizeHandle className="h-1 bg-gray-700 hover:bg-blue-500 transition-colors" />
-              {/* Group Chat */}
+              {/* Group Chat / chat bot*/}
               <Panel defaultSize={75} minSize={50}>
                 <Chatbot code={code} />
               </Panel>
             </PanelGroup>
           </Panel>
 
-          <PanelResizeHandle className="w-1 hover:bg-blue-500 transition-colors  bg-gray-700" />
+          <PanelResizeHandle className="w-0.5 hover:bg-blue-500 transition-colors  bg-gray-700" />
           {/*Editor*/}
           <Panel defaultSize={50} minSize={10}>
             {/*files*/}
@@ -81,7 +72,7 @@ export default function CodeEditor() {
               <Button className="m-1">node.js</Button>
               <Button className="m-1">index.html</Button>
             </div>
-            <div className="h-full  mx-2 mb-2 w-full rounded-xl overflow-hidden ">
+            <div className="h-full text-xs   w-full rounded-xl overflow-auto ">
               <Editor
                 height="100%"
                 width="100%"
@@ -103,7 +94,7 @@ export default function CodeEditor() {
               />
             </div>
           </Panel>
-          <PanelResizeHandle className="w-1 bg-gray-700 hover:bg-blue-500 transition-colors mx-2 " />
+          <PanelResizeHandle className="w-0.5 bg-gray-700 hover:bg-blue-500 transition-colors mx-2 " />
 
           {/* code preview and  Terminal */}
           <Panel defaultSize={25} minSize={10}>

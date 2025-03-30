@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import React, { useState, } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Send, Bot, User } from "lucide-react";
 import { fetchAIResponse } from "@/components/elements/ChatbotRes";
 import ReactMarkdown from "react-markdown";
@@ -17,6 +17,7 @@ interface ChatbotProps {
 }
 
 export function Chatbot({ code }: ChatbotProps) {
+  const AutoScrollRef = useRef<HTMLDivElement | null>(null);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
@@ -27,7 +28,19 @@ export function Chatbot({ code }: ChatbotProps) {
   ]);
   const [inputMessage, setInputMessage] = useState("");
   const [loading, setLoading] = useState(false);
- 
+
+  // scrolls to bottom after the message is added by the bot
+  const ScrollToBottom = () => {
+    if (AutoScrollRef.current) {
+      AutoScrollRef.current.scrollTo({
+        top: AutoScrollRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  };
+  useEffect(() => {
+    ScrollToBottom();
+  }, [messages]);
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,7 +76,6 @@ export function Chatbot({ code }: ChatbotProps) {
     };
 
     setMessages((prev) => [...prev, aiMessage]);
-
     setInputMessage("");
     setLoading(false);
   };
@@ -80,7 +92,10 @@ export function Chatbot({ code }: ChatbotProps) {
         </div>
         {/* Messages Container */}
 
-        <div className="h-3/5 overflow-y-auto p-4 space-y-4">
+        <div
+          ref={AutoScrollRef}
+          className="h-3/5 overflow-y-auto p-4 space-y-4"
+        >
           {messages.map((message) => (
             <div
               key={message.id}
