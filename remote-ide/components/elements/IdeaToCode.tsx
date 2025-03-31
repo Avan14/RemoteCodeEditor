@@ -53,7 +53,7 @@ export default function IdeaToApp() {
               {" "}
               📎Attach
             </Button>
-            <Link href="/CodeEditor">
+            <Link href="/DashBoard">
               <Button className="bg-[#1d4ed8] text-xl font-bold hover:bg-[#1d6ed8] text-white">
                 🚀 Start building
               </Button>

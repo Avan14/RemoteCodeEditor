@@ -5,7 +5,7 @@ import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { Terminal, Folder, Users, Plus, Ghost } from "lucide-react";
 import Editor from "@monaco-editor/react";
 import { Header } from "./Header";
-import { CODE_SNIPPETS, FILE_NAMES, THEMES } from "./constants";
+import { CODE_SNIPPETS, FILE_NAMES, THEMES } from "../../../components/Constants/constants";
 import { Chatbot } from "./chatbot";
 import { Button } from "@/components/ui/button";
 import { FileExplorer } from "./FileExplorer/FileExplorer";

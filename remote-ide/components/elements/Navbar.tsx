@@ -101,7 +101,7 @@ export default function Navbar() {
             </Link>
           ) : null}
 
-          <Link href={isSignedIn ? "/CodeEditor/12" : "/sign-up"}>
+          <Link href={isSignedIn ? "/DashBoard" : "/sign-up"}>
             <Button
               onClick={handleStartBuilding}
               variant="secondary"
