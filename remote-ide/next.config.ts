@@ -20,7 +20,7 @@ const nextConfig = {
         loader: '@next/font/google', 
         options: { 
           subsets: ['latin'],
-          timeout: 15000 // Increase timeout to 15 seconds
+          timeout: 15000 
         }
       },
     ],
