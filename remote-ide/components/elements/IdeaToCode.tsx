@@ -27,8 +27,24 @@ export default function IdeaToApp() {
         transition={{ repeat: Infinity, duration: 3 }}
       />
 
-      <Card className="mt-8 bg-gray-900 p-6 rounded-xl shadow-lg relative z-10 w-full max-w-3xl">
-        <CardContent className="flex flex-col gap-4">
+      <Card className="group mt-8 bg-gray-900 p-6 rounded-xl shadow-lg relative overflow-hidden w-full max-w-3xl">
+        {/* Primary Metallic Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#0050FF]/5 to-transparent pointer-events-none" />
+
+        {/* Additional Metallic Texture */}
+        <div className="absolute inset-0 bg-gradient-to-br from-transparent to-white opacity-5 pointer-events-none mix-blend-overlay" />
+
+        {/* Enhanced Shine Effect */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-r from-transparent via-[#0050FF]/20 to-transparent -translate-x-full group-hover:translate-x-full transform transition-transform duration-1000" />
+
+        {/* Inner Shadow for Depth */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ boxShadow: "inset 0 0 30px rgba(0,0,0,0.8)" }}
+        />
+
+        {/* Card content placed above overlays */}
+        <CardContent className="relative flex flex-col gap-4">
           <div>
             <p className="text-gray-400 mb-4">
               What would you like to build? Start typing or choose an example...
@@ -38,7 +54,7 @@ export default function IdeaToApp() {
                 <Button
                   key={opt.name}
                   variant="outline"
-                  className="flex items-center gap-2 w-32 "
+                  className="flex items-center gap-2 w-32"
                 >
                   {opt.icon} {opt.name}
                 </Button>
@@ -48,9 +64,8 @@ export default function IdeaToApp() {
           <div className="mt-4 flex justify-between border-t-2 border-gray-700 pt-5">
             <Button
               variant="ghost"
-              className="bg-gray-700 text-white  hover:bg-gray-600"
+              className="bg-gray-700 text-white hover:bg-gray-600"
             >
-              {" "}
               📎Attach
             </Button>
             <Link href="/DashBoard">

@@ -12,7 +12,7 @@ import { ExecuteCode } from "./api";
 import { LANGUAGE_VERSIONS } from "./constants";
 import Link from "next/link";
 
-const languageOptions = Object.keys(LANGUAGE_VERSIONS).map((key) => ({
+export const languageOptions = Object.keys(LANGUAGE_VERSIONS).map((key) => ({
   value: key,
   label: `${key.charAt(0).toUpperCase() + key.slice(1)} (${
     LANGUAGE_VERSIONS[key as keyof typeof LANGUAGE_VERSIONS]

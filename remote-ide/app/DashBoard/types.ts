@@ -5,9 +5,9 @@ type FILE_NAMES_type = typeof FILE_NAMES
 export type TProjectCard = {
     id: string,
     name: string,
-    type: "SoftwareDev" | "WebDev",
+    type: string,
     date: Date,
-    language: "React" | FILE_NAMES_type
+    language: string
 }
 
 export const projectcard_example = [

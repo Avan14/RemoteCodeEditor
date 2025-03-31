@@ -7,9 +7,12 @@ import { Input } from "@/components/ui/input";
 import { ProjectCard } from "./ProjectCard";
 import { SideBar } from "./sidebar";
 import Link from "next/link";
+import { projectcard_example, TProjectCard , } from "./types";
 
 export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [projects, setProjects] = useState<TProjectCard[]>(projectcard_example);
+  
 
   return (
     <div className="h-screen bg-black text-white ">
@@ -49,15 +52,16 @@ export default function Dashboard() {
       {/* Main Content */}
       <div className="flex h-full bg-black ">
         {/* Sidebar */}
-        <SideBar></SideBar>
+        <SideBar SetProjects={setProjects} Projects={projects}></SideBar>
 
         {/* Main Content Area */}
         <main className="flex-1 p-8 overflow-auto ">
-          <h1 className="text-3xl font-bold mb-8 ">Welcome to Editor</h1>
+          <h1 className="text-4xl font-bold mb-8 font-[Redwing-M] text-bold">Welcome to Editor</h1>
 
           {/* Projects Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <ProjectCard searchQuery={searchQuery}></ProjectCard>
+          <ProjectCard searchQuery={searchQuery} Projects={projects} />
+
           </div>
         </main>
       </div>
