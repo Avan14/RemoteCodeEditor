@@ -17,7 +17,7 @@ export const FileExplorer = () => {
           <Search className="h-4 w-4 text-gray-400" />
         </div>
       </div>
-      {/* file tree  */}
+      {/* file tree recursive call */}
       <FolderCom data={Folder_Example as TFolder} />
     </div>
   );
