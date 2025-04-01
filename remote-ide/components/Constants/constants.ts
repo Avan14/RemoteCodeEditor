@@ -65,3 +65,50 @@ export const THEMES=[
   "vs-light",
   "hc-black"
 ]
+
+export const default_code = `
+function LikeButton() { 
+  const [likes, setLikes] = React.useState(0);
+  return (
+    <div
+      style={{
+        backgroundColor: "#f0f8ff",
+        padding: "10px",
+        borderRadius: "8px",
+        textAlign: "center",
+        width: "200px",
+      }}
+    >
+      <p
+        className="likes"
+        style={{
+          fontSize: "24px",
+          fontWeight: "bold",
+          marginBottom: "10px",
+          color: "#000000", 
+        }}
+      >
+        {likes}
+      </p>
+      <button
+        className="button"
+        style={{
+          backgroundColor: "#007bff",
+          color: "#fff",
+          border: "none",
+          borderRadius: "4px",
+          padding: "10px 20px",
+          cursor: "pointer",
+          fontSize: "16px",
+        }}
+        onClick={() => setLikes(likes + 2)}
+      >
+        Like
+      </button>
+    </div>
+  );
+}
+
+render(<LikeButton />);
+
+`;
