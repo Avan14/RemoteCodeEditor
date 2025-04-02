@@ -1,18 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { Search, FileCode2, Command, Divide } from "lucide-react";
+import { Search, FileCode2, Command} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ProjectCard } from "./ProjectCard";
 import { SideBar } from "./sidebar";
 import Link from "next/link";
-import { projectcard_example, TProjectCard , } from "./types";
+import { TProjectCard } from "./types";
+import { projectcard_example } from "@/components/Constants/constants";
 
 export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState("");
   const [projects, setProjects] = useState<TProjectCard[]>(projectcard_example);
-  
 
   return (
     <div className="h-screen bg-black text-white ">
@@ -22,7 +22,9 @@ export default function Dashboard() {
           <div className="flex items-center space-x-4">
             <FileCode2 className="h-6 w-6 text-blue-500" />
             <Link href={"/"}>
-            <Button className=" font-[Redwing-M] text-2xl  bg-black w-20">HOME</Button>
+              <Button className=" font-[Redwing-M] text-2xl  bg-black w-20">
+                HOME
+              </Button>
             </Link>
             <div className="relative w-96">
               <Input
@@ -56,12 +58,13 @@ export default function Dashboard() {
 
         {/* Main Content Area */}
         <main className="flex-1 p-8 overflow-auto ">
-          <h1 className="text-4xl font-bold mb-8 font-[Redwing-M] text-bold">Welcome to Editor</h1>
+          <h1 className="text-4xl font-bold mb-8 font-[Redwing-M] text-bold">
+            Welcome to Editor
+          </h1>
 
           {/* Projects Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <ProjectCard searchQuery={searchQuery} Projects={projects} />
-
+            <ProjectCard searchQuery={searchQuery} Projects={projects} />
           </div>
         </main>
       </div>

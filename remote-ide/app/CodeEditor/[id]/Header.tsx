@@ -5,12 +5,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Play, Settings, Code2 } from "lucide-react";
+import { Play, Settings, Code2, BotMessageSquare } from "lucide-react";
 import { useState } from "react";
 import { HeaderProps } from "./page";
 import { ExecuteCode } from "./api";
 import { LANGUAGE_VERSIONS } from "./constants";
 import Link from "next/link";
+import { Chatbot } from "./chatbot";
 
 export const languageOptions = Object.keys(LANGUAGE_VERSIONS).map((key) => ({
   value: key,
@@ -28,7 +29,11 @@ export const Header = ({
 }: HeaderProps) => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(false);
+  const [AIhelp, setAIhelp] = useState(false);
 
+  const toggleAIHelp = () => {
+    setAIhelp(!AIhelp);
+  };
   const handleRun = async () => {
     if (!Language || !code) {
       seterror(true);
@@ -53,33 +58,45 @@ export const Header = ({
   };
 
   return (
-    <header className="border-b border-gray-700 p-4">
-      <div className="flex items-center justify-between">
+    <header className="relative bg-gradient-to-br from-[#000000] via-[#0A0A0A] to-[#000000]overflow-hidden transition-all duration-300 hover:border-blue-950 p-4 shadow-lg">
+      {/* Metallic overlay */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#0050FF]/10 to-transparent pointer-events-none" />
+      {/* Shine effect */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-transparent via-[#0050FF]/10 to-transparent -translate-x-full group-hover:translate-x-full transform transition-transform duration-1000" />
+
+      <div className="flex items-center justify-between relative z-10">
         <div className="flex items-center space-x-4">
           <Code2 className="h-6 w-6 text-blue-400" />
           <Link href="/DashBoard">
-          <h1 className="text-xl font-bold">
-            EDITOR
-          </h1>
+            <h1 className="text-4xl font-bold tracking-wider  font-[RedWing-M]">
+              EDITOR
+            </h1>
           </Link>
         </div>
         <div className="flex items-center space-x-4">
           <Select value={Language} onValueChange={setLanguage}>
-            <SelectTrigger className="w-[180px] bg-gray-800 border-gray-700">
+            <SelectTrigger className="w-[180px] bg-[#0A0A0A] border-blue-900 hover:border-blue-950 transition-all duration-200">
               <SelectValue placeholder="Select language" />
             </SelectTrigger>
-            <SelectContent className="bg-gray-800 border-gray-700">
+            <SelectContent className="bg-[#0A0A0A] border-blue-900 h-60">
               {languageOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
+                <SelectItem key={option.value} value={option.value} className="text-white ">
                   {option.label}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
           <button
+            className="p-2 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-md hover:bg-blue-500/20 transition-all duration-300 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_0_15px_rgba(0,80,255,0.15)] flex items-center gap-1"
+            onClick={toggleAIHelp}
+          >
+            <BotMessageSquare></BotMessageSquare>
+            CHAT WITH CODE
+          </button>
+          <button
             onClick={handleRun}
             disabled={loading}
-            className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-md flex items-center space-x-2 disabled:opacity-50"
+            className="px-4 py-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/20 transition-all duration-300 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_0_15px_rgba(0,80,255,0.15)] rounded-md flex items-center space-x-2 disabled:opacity-50"
           >
             {loading ? (
               <div className="animate-spin h-4 w-4 border-2 border-gray-200 border-t-transparent rounded-full"></div>
@@ -88,11 +105,13 @@ export const Header = ({
             )}
             <span>Run</span>
           </button>
-          <button className="p-2 hover:bg-gray-700 rounded-md">
+          <button className="p-2 hover:bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-md transition-all duration-300">
             <Settings className="h-5 w-5" />
           </button>
         </div>
       </div>
+      {/* Render Chatbot component conditionally */}
+            {AIhelp && <Chatbot code={code} toggleAIHelp={toggleAIHelp} />}
     </header>
   );
 };

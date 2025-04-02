@@ -26,7 +26,7 @@ export function CreateProjectDialog({ onCreateProject }: CreateProjectDialogProp
 
   const handleSubmit = () => {
     const newProject: TProjectCard = {
-      id: crypto.randomUUID(),
+      id: Math.random().toString(36),
       name,
       type,
       date: new Date(),

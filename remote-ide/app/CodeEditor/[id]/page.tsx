@@ -18,6 +18,7 @@ import { Header } from "./Header";
 import { CODE_SNIPPETS, FILE_NAMES, THEMES } from "./constants";
 import { Chatbot } from "./chatbot";
 import { Button } from "@/components/ui/button";
+import { FileExplorer } from "./FileExplorer/FileExplorer";
 
 export interface HeaderProps {
   code: string;
@@ -45,7 +46,7 @@ export default function CodeEditor() {
   }
 
   return (
-    <div className="h-screen bg-gray-900 text-white flex flex-col text-xs">
+    <div className="h-screen bg-gradient-to-br from-[#000000] via-[#0A0A0A] to-[#000000] text-white flex flex-col text-xs">
       <Header
         code={code}
         setLanguage={setLanguage}
@@ -54,50 +55,28 @@ export default function CodeEditor() {
         seterror={setError}
       />
       <div className="flex-1 overflow-hidden">
-        {/* Editor and Terminal */}
         <PanelGroup direction="horizontal">
-          <Panel defaultSize={25} minSize={20}>
-            {/* File Explorer and Group Chat */}
-            <PanelGroup direction="vertical">
-              {/* File Explorer */}
-              <div className=" p-4">
-                {/* Top Header Section */}
-                <div className="flex items-center space-x-2 mb-4 justify-between border-b-[1px] border-gray-700">
-                  <div className="flex items-center space-x-2 ">
-                    <span className="font-medium text-base">Files</span>
-                  </div>
-                  <div className="flex items-center space-x-2 mb-4">
-                    <FolderPlus className="h-4 w-4 text-gray-400" />
-                    <FilePlus className="h-4 w-4 text-gray-400" />
-                    <Search className="h-4 w-4 text-gray-400" />
-                  </div>
-                </div>
-
-                <div className="flex items-center  text-white">
-                  <File className="h-4"></File>
-                  <div>{FILE_NAMES[Language as keyof typeof FILE_NAMES]}</div>
-                </div>
-              </div>
-              <Panel defaultSize={10} minSize={5}></Panel>
-
-              <PanelResizeHandle className="h-1 bg-gray-700 hover:bg-blue-500 transition-colors" />
-              {/* Group Chat / chat bot*/}
-              <Panel defaultSize={75} minSize={50}>
-                <Chatbot code={code} />
-              </Panel>
-            </PanelGroup>
+          {/* Left Sidebar */}
+          <Panel
+            defaultSize={25}
+            minSize={20}
+            className="bg-gray-900 bg-gradient-to-br from-[#000000] via-[#0A0A0A] to-[#000000] rounded-lg shadow-md border border-blue-900"
+          >
+           <FileExplorer></FileExplorer>
           </Panel>
-
-          <PanelResizeHandle className="w-0.5 hover:bg-blue-500 transition-colors  bg-gray-700" />
-          {/*Editor*/}
-          <Panel defaultSize={50} minSize={10}>
-            {/*files*/}
-            <div className="flex flex-row gap-1 ">
-              <Button className="m-1 border-[1px] border-zinc-500 ">
+          <PanelResizeHandle className="w-0.5 hover:bg-blue-500 transition-colors bg-gray-700" />
+          {/* Main Editor Panel updated with gradient, shadow, and side borders */}
+          <Panel
+            defaultSize={50}
+            minSize={10}
+            className="bg-gradient-to-br from-[#000000] via-[#0A0A0A] to-[#000000] shadow-md border border-blue-900 border-r-4 border-l-4"
+          >
+            <div className="flex flex-row gap-1">
+              <Button className="m-1 border-[1px] border-zinc-500">
                 {FILE_NAMES[Language as keyof typeof FILE_NAMES]}
               </Button>
             </div>
-            <div className="h-full text-xs   w-full rounded-xl overflow-auto ">
+            <div className="h-full text-xs w-full rounded-xl overflow-auto">
               <Editor
                 height="100%"
                 width="100%"
@@ -108,30 +87,31 @@ export default function CodeEditor() {
                 value={code}
                 onChange={(value) => setCode(value || "")}
                 options={{
-                  minimap: {
-                    enabled: false,
-                  },
-                  padding: {
-                    bottom: 4,
-                    top: 6,
-                  },
+                  minimap: { enabled: false },
+                  padding: { bottom: 4, top: 6 },
                 }}
               />
             </div>
           </Panel>
-          <PanelResizeHandle className="w-0.5 bg-gray-700 hover:bg-blue-500 transition-colors mx-2 " />
-
-          {/* code preview and  Terminal */}
-          <Panel defaultSize={25} minSize={10}>
+          <PanelResizeHandle className="w-0.5 bg-gray-700 hover:bg-blue-500 transition-colors mx-2" />
+          {/* Right Terminal Panel updated to use gradient and matching borders */}
+          <Panel
+            defaultSize={25}
+            minSize={10}
+            className="bg-gradient-to-br from-[#000000] via-[#0A0A0A] to-[#000000] shadow-md border border-blue-900"
+          >
             <PanelGroup direction="vertical">
-              <Panel defaultSize={40} minSize={20}>
-                {/* Terminal */}
-                <div className="h-full bg-gray-800 border-r border-gray-700 p-4">
-                  <div className="flex items-center space-x-2 mb-2">
+              <Panel
+                defaultSize={40}
+                minSize={20}
+                className="bg-gray-800 border-r bg-gradient-to-br from-[#000000] via-[#0A0A0A] to-[#000000] shadow-md border border-blue-900"
+              >
+                <div className="h-full p-4">
+                  <div className="flex items-center space-x-2 mb-2 border-b-2 border-gray-700">
                     <Terminal className="h-4 w-4 text-gray-400" />
                     <span className="font-medium">Terminal</span>
                   </div>
-                  <pre className="font-mono text-sm text-gray-300 whitespace-pre-wrap overflow-y-auto h-full ">
+                  <pre className="font-mono text-sm text-gray-300 whitespace-pre-wrap overflow-y-auto h-full">
                     {error ? (
                       <div className="text-red-500">{output}</div>
                     ) : (
