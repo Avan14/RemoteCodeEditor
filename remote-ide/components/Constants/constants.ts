@@ -147,26 +147,5 @@ export const projectcard_example = [
     type: "SoftwareDev",
     language: "React Native",
     date: new Date("2024-03-05"),
-  },
-  {
-    id: "6",
-    name: "Portfolio Website",
-    type: "WebDev",
-    language: "JavaScript",
-    date: new Date("2024-02-20"),
-  },
-  {
-    id: "7",
-    name: "AI Chatbot",
-    type: "SoftwareDev",
-    language: "Python",
-    date: new Date("2024-01-25"),
-  },
-  {
-    id: "8",
-    name: "Cloud Storage System",
-    type: "SoftwareDev",
-    language: "Go",
-    date: new Date("2024-02-15"),
-  },
+  }
 ];

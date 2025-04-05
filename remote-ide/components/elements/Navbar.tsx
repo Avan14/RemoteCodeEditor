@@ -9,12 +9,15 @@ import Link from "next/link";
 import { useClerk, useUser } from "@clerk/nextjs";
 import { useState, useEffect } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { auth } from "@clerk/nextjs/server";
+import axios from "axios"
 
 export default function Navbar() {
   const clerk = useClerk();
-  const { isLoaded, isSignedIn } = useUser();
+  const { user, isSignedIn } = useUser();
   const [showRedirectPopup, setShowRedirectPopup] = useState(false);
   const [showWelcomePopup, setShowWelcomePopup] = useState(false);
+  const [userData , setUserData] = useState();
 
   const handleStartBuilding = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!isSignedIn) {
@@ -26,6 +29,34 @@ export default function Navbar() {
       }, 2000);
     }
   };
+  
+  const DBcall = async () => {
+    try {
+      const { userId } = await auth();
+      console.log("User ID:", userId);
+  
+      if (userId) {
+        
+  
+        const response = await axios.post("/api/user", {
+          userId: userId,
+          name : user?.username
+        });
+  
+        console.log("Response from server:", response.data);
+        setUserData(response.data);
+
+      } else {
+        console.warn("No userId returned from auth");
+      }
+       
+    }
+    catch(err){
+      // fill with dummy data or something
+    }
+    
+
+  }  
 
   const logouthandler = async () => {
     try {
@@ -37,12 +68,12 @@ export default function Navbar() {
 
   // Check sessionStorage to show welcome popup only once per session
   useEffect(() => {
-    if (isLoaded && isSignedIn && !sessionStorage.getItem("welcomePopupShown")) {
+    if ( isSignedIn && !sessionStorage.getItem("welcomePopupShown")) {
       setShowWelcomePopup(true);
       sessionStorage.setItem("welcomePopupShown", "true");
       setTimeout(() => setShowWelcomePopup(false), 2000);
     }
-  }, [isLoaded, isSignedIn]);
+  }, [ isSignedIn]);
 
   console.log(clerk.loaded);
 
