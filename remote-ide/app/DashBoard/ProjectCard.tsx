@@ -1,9 +1,5 @@
 "use client";
-import {
-  JSX,
-  useEffect,
-  useState,
-} from "react";
+import { JSX, useEffect, useState } from "react";
 import { TProjectCard } from "./types";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -81,7 +77,7 @@ export const ProjectCard = ({
                 </div>
                 <div className="flex justify-between items-center pt-2">
                   <span className="text-blue-400/60 text-sm">
-                    {project.date.toLocaleDateString("en-US", {
+                    {new Date(project.date).toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "short",
                       day: "numeric",

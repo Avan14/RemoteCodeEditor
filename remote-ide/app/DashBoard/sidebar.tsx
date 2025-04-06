@@ -7,27 +7,49 @@ import {
   Users2,
   Activity,
   Book,
-  Layout
+  Layout,
 } from "lucide-react";
 import { CreateProjectDialog } from "./CreateProject";
 import { TProjectCard } from "./types";
+import { useUserdata } from "../context/UserDataContext";
+import axios from "axios";
 
-export const SideBar = ({SetProjects , Projects}:any) => {
- 
-        const handleCreateProject = (project: TProjectCard) => {
-          SetProjects([...Projects, project]);
-        };
-      
+export const SideBar = ({ SetProjects, Projects }: any) => {
+   
+    const { user: contextUser, setUser } = useUserdata();
+  
+    const handleCreateProject = async (project: TProjectCard) => {
+      try {
+        // Add new project locally
+        const newProjects = [...Projects, project];
+        SetProjects(newProjects);
+    
+        // Update backend
+        const response = await axios.put("/Api/User", {
+          userId: contextUser?.id,
+          updatedprojects: newProjects,
+        });
+    
+        // Optional: Update global user context if backend returns updated user
+        if (response.data?.user) {
+          setUser(response.data.user);
+        }
+      } catch (error) {
+        console.error("Error updating user projects:", error);
+        alert("Failed to update projects. Please try again.");
+      }
+    };
+
   return (
     <aside className="relative w-64 bg-[#0D1119] h-[calc(100vh-4rem)] p-4 overflow-hidden group">
       {/* Metallic overlay */}
       <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#0050FF]/5 to-transparent pointer-events-none" />
       {/* Shine effect */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100  bg-gradient-to-r from-transparent via-[#0050FF]/10 to-transparent -translate-x-full group-hover:translate-x-full transform transition-transform duration-1000" />
-      
+
       {/* Sidebar content */}
       <div className="relative z-10">
-      <CreateProjectDialog onCreateProject={handleCreateProject} />
+        <CreateProjectDialog onCreateProject={handleCreateProject} />
 
         <nav className="space-y-1">
           {[

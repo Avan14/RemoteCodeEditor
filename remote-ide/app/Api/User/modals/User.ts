@@ -1,32 +1,37 @@
 import mongoose from "mongoose";
-import { FileTreeType } from "../schema/types";
 
-
-const FileTreeSchema = new mongoose.Schema<FileTreeType>({
-    id: { type: String, required: true },
-    name: { type: String, required: true },
-    type: { type: String, enum: ["Folder", "File"], required: true },
-    code: { type: String},
-    children: [{ type: mongoose.Schema.Types.Mixed }]
-}, { _id: false });
-
-FileTreeSchema.add({ children: [FileTreeSchema] });
-
-const ProjectSchema = new mongoose.Schema({
-    project_id: { type: String, required: true },
-    name: { type: String, required: true },
-    type: { type: String, required: true },
-    date: { type: Date, required: true },
-    language: { type: String, required: true },
-    folder: { type: FileTreeSchema, required: true }
-}, { _id: false });
-
-const UserSchema = new mongoose.Schema({
-    id: { type: String, required: true },
-    name: { type: String, required: true },
-    projects: [ProjectSchema] 
+const FileFolderSchema = new mongoose.Schema({
+  id: String,
+  name: String,
+  type: {
+    type: String,
+    enum: ["File", "Folder"],
+    required: true,
+  },
+  code: String,
+  children: [mongoose.Schema.Types.Mixed], // placeholder to allow nesting
 });
 
- export const UserModel = mongoose.models.User || mongoose.model("User", UserSchema);
+// This sets children as an array of the same schema (recursive)
+FileFolderSchema.add({
+  children: [FileFolderSchema],
+});
 
+const ProjectSchema = new mongoose.Schema({
+  project_id: String,
+  name: String,
+  type: String,
+  date: Date,
+  language: String,
+  folder: FileFolderSchema,
+});
 
+const UserSchema = new mongoose.Schema({
+  id: String,
+  name: String,
+  projects: [ProjectSchema],
+});
+
+const UserModel = mongoose.models.User || mongoose.model("User", UserSchema);
+
+export default UserModel;
