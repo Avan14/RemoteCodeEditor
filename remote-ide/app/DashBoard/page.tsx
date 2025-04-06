@@ -9,10 +9,15 @@ import { SideBar } from "./sidebar";
 import Link from "next/link";
 import { TProjectCard } from "./types";
 import { projectcard_example } from "@/components/Constants/constants";
+import { useUserdata } from "../context/UserDataContext";
+
 
 export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [projects, setProjects] = useState<TProjectCard[]>(projectcard_example);
+   const { user, setUser } = useUserdata();
+  
+  const [projects, setProjects] = useState<TProjectCard[]>(user?.projects || projectcard_example);
+  
 
   return (
     <div className="h-screen bg-black text-white ">

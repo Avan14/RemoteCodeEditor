@@ -48,7 +48,7 @@ export const ProjectCard = ({
       ) : (
         filteredProjects.map((project) => (
           <Card
-            key={project.id}
+            key={project.name}
             className="relative bg-gradient-to-br from-[#000000] via-[#0A0A0A] to-[#000000] hover:border-2 overflow-hidden group transition-all duration-300 hover:border-blue-950 border-0 border-blue-900"
             style={{
               boxShadow:
@@ -90,8 +90,8 @@ export const ProjectCard = ({
                   <Link
                     href={
                       project.type === "SoftwareDev"
-                        ? `/CodeEditor/${project.id}`
-                        : `/WebDev/${project.id}`
+                        ? `/CodeEditor/${project.name}`
+                        : `/WebDev/${project.name}`
                     }
                   >
                     <Button

@@ -8,16 +8,16 @@ import {
 import Link from "next/link";
 import { useClerk, useUser } from "@clerk/nextjs";
 import { useState, useEffect } from "react";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { auth } from "@clerk/nextjs/server";
-import axios from "axios"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useUserdata } from "../../app/context/UserDataContext";
+import axios from "axios";
 
 export default function Navbar() {
   const clerk = useClerk();
-  const { user, isSignedIn } = useUser();
   const [showRedirectPopup, setShowRedirectPopup] = useState(false);
   const [showWelcomePopup, setShowWelcomePopup] = useState(false);
-  const [userData , setUserData] = useState();
+  const { user: clerkUser, isSignedIn } = useUser();
+  const { user: contextUser, setUser } = useUserdata();
 
   const handleStartBuilding = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!isSignedIn) {
@@ -29,34 +29,25 @@ export default function Navbar() {
       }, 2000);
     }
   };
-  
+
   const DBcall = async () => {
+    console.log("🔥 DBcall triggered");
     try {
-      const { userId } = await auth();
-      console.log("User ID:", userId);
-  
-      if (userId) {
-        
-  
-        const response = await axios.post("/api/user", {
-          userId: userId,
-          name : user?.username
+      if (clerkUser && clerkUser.id) {
+        const response = await axios.post("/Api/User", {
+          userId: clerkUser.id,
+          name: clerkUser.firstName,
         });
-  
+
         console.log("Response from server:", response.data);
-        setUserData(response.data);
-
+        setUser(response.data);
       } else {
-        console.warn("No userId returned from auth");
+        console.warn("User not signed in or missing ID");
       }
-       
+    } catch (err) {
+      console.error("Error in DBcall", err);
     }
-    catch(err){
-      // fill with dummy data or something
-    }
-    
-
-  }  
+  };
 
   const logouthandler = async () => {
     try {
@@ -66,14 +57,19 @@ export default function Navbar() {
     }
   };
 
-  // Check sessionStorage to show welcome popup only once per session
   useEffect(() => {
-    if ( isSignedIn && !sessionStorage.getItem("welcomePopupShown")) {
-      setShowWelcomePopup(true);
-      sessionStorage.setItem("welcomePopupShown", "true");
-      setTimeout(() => setShowWelcomePopup(false), 2000);
-    }
-  }, [ isSignedIn]);
+    const runEffect = async () => {
+      if (isSignedIn) {
+        setShowWelcomePopup(true);
+
+        await DBcall(); 
+
+        setTimeout(() => setShowWelcomePopup(false), 2000);
+      }
+    };
+
+    runEffect();
+  }, [isSignedIn]);
 
   console.log(clerk.loaded);
 
