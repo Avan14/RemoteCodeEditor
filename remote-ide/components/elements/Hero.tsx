@@ -67,7 +67,7 @@ export default function Hero() {
                 >
                   <CardContent>
                     <img
-                      src={`/icons/${name.toLowerCase()}.png`}
+                      src={`/icons/${name}.png`}
                       alt={name}
                       className="w-12 h-12 mx-auto object-contain"
                       onError={(e) => (e.currentTarget.style.display = "none")}
