@@ -71,7 +71,7 @@ export default function Hero() {
           Focus on your code.
         </h1>
         <h1 className="text-6xl font-bold text-blue-700 font-[Redwing-M]">
-          Let Editor do the rest.
+          Let CodePulse do the rest.
         </h1>
 
         <div className="mt-6 bg-gray-900 p-6 rounded-xl relative overflow-hidden group">

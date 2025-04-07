@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button";
 import {
   Plus,
@@ -33,6 +35,7 @@ export const SideBar = ({ SetProjects, Projects }: any) => {
         // Optional: Update global user context if backend returns updated user
         if (response.data?.user) {
           setUser(response.data.user);
+          console.log(response.data.user);
         }
       } catch (error) {
         console.error("Error updating user projects:", error);

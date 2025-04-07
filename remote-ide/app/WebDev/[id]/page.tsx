@@ -12,13 +12,15 @@ import { LiveProvider, LiveEditor, LivePreview, LiveError } from "react-live";
 import React from "react";
 import { default_code } from "@/components/Constants/constants";
 import { FileTree } from "./FileExplorer/types";
+import { useUserdata } from "@/app/context/UserDataContext";
+import { useParams } from "next/navigation";
 
 export default function WebDev() {
-  const [code, setCode] = useState<string>("");
-  const [File , setFile]=useState<FileTree>();
+
+  const [code, setCode] = useState<string>(default_code);
   const editorRef = useRef<any>(null);
 
-  function handleEditorDidMount(editor: { focus: () => void; }) {
+  function handleEditorDidMount(editor: { focus: () => void }) {
     editorRef.current = editor;
     editor.focus();
   }
@@ -31,8 +33,7 @@ export default function WebDev() {
       <div className="flex-1 overflow-hidden">
         <PanelGroup direction="horizontal">
           <Panel defaultSize={25} minSize={20} className="bg-gray-900">
-           
-            <FileExplorer code={code}  />
+            <FileExplorer  />
           </Panel>
           <PanelResizeHandle className=" hover:bg-blue-500 transition-colors " />
           <Panel

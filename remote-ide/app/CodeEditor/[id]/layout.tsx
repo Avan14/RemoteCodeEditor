@@ -1,5 +1,6 @@
 "use client"; 
 
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { motion } from "framer-motion";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -10,7 +11,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2}}
     >
+      <TooltipProvider>
+
       {children}
+      </TooltipProvider>
     </motion.div>
   );
 }

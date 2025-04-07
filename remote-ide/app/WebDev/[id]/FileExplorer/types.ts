@@ -1,11 +1,12 @@
 
 export type FileTree = {
-    id: string,
-    name: string,
-    type: "Folder" | "File"
-    children: FileTree[] 
-    code: string | null
-}
+    id: string;
+    name: string;
+    type: "Folder" | "File";
+    code: string | null;
+    children: FileTree[];
+};
+
 
 export const Folder_Example = {
     id: "root",

@@ -5,6 +5,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Play, Settings, Code2, BotMessageSquare } from "lucide-react";
 import { useState } from "react";
 import { HeaderProps } from "./page";
@@ -49,6 +54,7 @@ export const Header = ({
       // @ts-ignore
       const Sourcecode = await ExecuteCode(Language, code, seterror);
       setoutput(Sourcecode);
+      seterror(false);
     } catch (error) {
       setoutput("Error: " + error);
       seterror(true);
@@ -58,7 +64,7 @@ export const Header = ({
   };
 
   return (
-    <header className="relative bg-gradient-to-br from-[#000000] via-[#0A0A0A] to-[#000000]overflow-hidden transition-all duration-300 hover:border-blue-950 p-4 shadow-lg">
+    <header className="relative bg-gradient-to-br from-[#000000] via-[#0A0A0A] to-[#000000] overflow-hidden transition-all duration-300 hover:border-blue-950 p-4 shadow-lg">
       {/* Metallic overlay */}
       <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#0050FF]/10 to-transparent pointer-events-none" />
       {/* Shine effect */}
@@ -67,11 +73,18 @@ export const Header = ({
       <div className="flex items-center justify-between relative z-10">
         <div className="flex items-center space-x-4">
           <Code2 className="h-6 w-6 text-blue-400" />
-          <Link href="/DashBoard">
-            <h1 className="text-4xl font-bold tracking-wider  font-[RedWing-M]">
-              EDITOR
-            </h1>
-          </Link>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link href="/DashBoard">
+                <h1 className="text-4xl font-bold tracking-wider font-[RedWing-M] cursor-pointer">
+                  EDITOR
+                </h1>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Back to Dashboard</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
         <div className="flex items-center space-x-4">
           <Select value={Language} onValueChange={setLanguage}>
@@ -80,7 +93,11 @@ export const Header = ({
             </SelectTrigger>
             <SelectContent className="bg-[#0A0A0A] border-blue-900 h-60">
               {languageOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value} className="text-white ">
+                <SelectItem
+                  key={option.value}
+                  value={option.value}
+                  className="text-white "
+                >
                   {option.label}
                 </SelectItem>
               ))}
@@ -90,7 +107,7 @@ export const Header = ({
             className="p-2 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-md hover:bg-blue-500/20 transition-all duration-300 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_0_15px_rgba(0,80,255,0.15)] flex items-center gap-1"
             onClick={toggleAIHelp}
           >
-            <BotMessageSquare></BotMessageSquare>
+            <BotMessageSquare />
             CHAT WITH CODE
           </button>
           <button
@@ -110,8 +127,7 @@ export const Header = ({
           </button>
         </div>
       </div>
-      {/* Render Chatbot component conditionally */}
-            {AIhelp && <Chatbot code={code} toggleAIHelp={toggleAIHelp} />}
+      {AIhelp && <Chatbot code={code} toggleAIHelp={toggleAIHelp} />}
     </header>
   );
 };

@@ -60,11 +60,9 @@ export default function Navbar() {
   useEffect(() => {
     const runEffect = async () => {
       if (isSignedIn) {
-        setShowWelcomePopup(true);
-
         await DBcall(); 
-
-        setTimeout(() => setShowWelcomePopup(false), 2000);
+        setShowWelcomePopup(true);
+        setTimeout(() => setShowWelcomePopup(false), 1000);
       }
     };
 
@@ -78,7 +76,7 @@ export default function Navbar() {
       <nav className="flex justify-between items-center bg-black px-6 py-4 text-white z-50 border-b-2 border-gray-800 sticky top-0">
         <div className="flex items-center space-x-2">
           <span className="text-5xl font-bolder text-[#1E90FF] font-[Redwing-M] px-3">
-            EDITOR
+          CodePulse
           </span>
 
           <DropdownMenu>
@@ -164,13 +162,13 @@ export default function Navbar() {
       </nav>
 
       {showRedirectPopup && (
-        <div className="fixed bottom-4 right-4 bg-gray-800 text-white px-4 py-2 rounded shadow-lg">
+        <div className="fixed bottom-4 right-4 bg-gray-800 text-white px-4 py-2 rounded shadow-lg z-50">
           You are being redirected to the signup page...
         </div>
       )}
 
       {showWelcomePopup && (
-        <div className="fixed bottom-16 right-4 bg-green-700 text-white px-4 py-2 rounded shadow-lg">
+        <div className="fixed bottom-16 right-4 bg-green-700 text-white px-4 py-2 rounded shadow-lg z-50">
           Welcome! You have successfully signed in.
         </div>
       )}

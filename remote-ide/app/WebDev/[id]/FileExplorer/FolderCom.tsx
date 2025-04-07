@@ -5,10 +5,10 @@ import { FileCom } from "./FileCom";
 
 type Tprops ={
   data : FileTree
-  code: string
 }
 
-export const FolderCom = ({data,code}:Tprops) => {
+export const FolderCom = ({data}:Tprops) => {
+  console.log(data);
   const [open, setOpen] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
   const [newItemName, setNewItemName] = useState("");
@@ -57,9 +57,9 @@ export const FolderCom = ({data,code}:Tprops) => {
         <div className="pl-6 border-l border-blue-900 ml-2">
           {data.children.map((child) => {
             if (child.type === "Folder") {
-              return <FolderCom key={child.id} data={child as FileTree} code={code as string} />;
+              return <FolderCom key={child.id} data={child as FileTree} />;
             } else {
-              return <FileCom key={child.id} data={child as FileTree} code={code} />;
+              return <FileCom key={child.id} data={child as FileTree} />;
             }
           })}
         </div>

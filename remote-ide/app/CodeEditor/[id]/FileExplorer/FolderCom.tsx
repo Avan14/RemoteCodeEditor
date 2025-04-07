@@ -23,7 +23,7 @@ export const FolderCom = ({ data }: { data: FileTree }) => {
       children: [],
     };
 
-    data.children.push(newItem);
+    data.children?.push(newItem);
     setNewItemName("");
     setShowPopup(false);
   };
@@ -49,7 +49,7 @@ export const FolderCom = ({ data }: { data: FileTree }) => {
       </div>
       {open && (
         <div className="pl-6 border-l border-blue-900 ml-2">
-          {data.children.map((child) => {
+          {data.children?.map((child) => {
             if (child.type === "Folder") {
               return <FolderCom key={child.id} data={child as FileTree} />;
             } else {

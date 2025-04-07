@@ -1,23 +1,36 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { 
-  Dialog, DialogContent, DialogDescription, DialogFooter, 
-  DialogHeader, DialogTitle, DialogTrigger 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { 
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { Plus } from "lucide-react";
 import { TProjectCard } from "./types";
 import { languageOptions } from "../CodeEditor/[id]/Header";
-import { useToast } from "@/hooks/use-toast"; 
+import { useToast } from "@/hooks/use-toast";
+import { randomUUID } from "crypto";
+import { Folder_Example } from "../CodeEditor/[id]/FileExplorer/types";
 
 interface CreateProjectDialogProps {
   onCreateProject: (project: TProjectCard) => void;
 }
 
-export function CreateProjectDialog({ onCreateProject }: CreateProjectDialogProps) {
+export function CreateProjectDialog({
+  onCreateProject,
+}: CreateProjectDialogProps) {
   const { toast } = useToast(); // Toast function
   const [open, setOpen] = useState(false); // Dialog state
   const [name, setName] = useState("");
@@ -25,15 +38,17 @@ export function CreateProjectDialog({ onCreateProject }: CreateProjectDialogProp
   const [language, setLanguage] = useState<TProjectCard["language"]>("React");
 
   const handleSubmit = () => {
-    const newProject: TProjectCard = {
+    const newProject = {
       name,
       type,
       date: new Date(),
       language,
+      folder: Folder_Example
     };
 
     onCreateProject(newProject);
-    
+    console.log(newProject);
+
     // Show success toast
     toast({
       title: "Project Created",
@@ -50,7 +65,10 @@ export function CreateProjectDialog({ onCreateProject }: CreateProjectDialogProp
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full bg-[#0050FF] hover:bg-[#0040CC] mb-6" size="lg">
+        <Button
+          className="w-full bg-[#0050FF] hover:bg-[#0040CC] mb-6"
+          size="lg"
+        >
           <Plus className="mr-2 h-4 w-4" /> Create Project
         </Button>
       </DialogTrigger>
@@ -58,31 +76,52 @@ export function CreateProjectDialog({ onCreateProject }: CreateProjectDialogProp
         <DialogHeader>
           <DialogTitle>Create New Project</DialogTitle>
           <DialogDescription>
-            Fill in the details for your new project. Click create when you're done.
+            Fill in the details for your new project. Click create when you're
+            done.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <label htmlFor="name" className="text-right">Name</label>
-            <Input id="name" value={name} onChange={(e) => setName(e.target.value)} className="col-span-3" />
+            <label htmlFor="name" className="text-right">
+              Name
+            </label>
+            <Input
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="col-span-3"
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <label htmlFor="type" className="text-right">Type</label>
-            <Select value={type} onValueChange={(value: "SoftwareDev" | "WebDev") => setType(value)}>
+            <label htmlFor="type" className="text-right">
+              Type
+            </label>
+            <Select
+              value={type}
+              onValueChange={(value: "SoftwareDev" | "WebDev") =>
+                setType(value)
+              }
+            >
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Select project type" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="WebDev">Web Development</SelectItem>
-                <SelectItem value="SoftwareDev">Software Development</SelectItem>
+                <SelectItem value="SoftwareDev">
+                  Software Development
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <label htmlFor="language" className="text-right">Language</label>
-            <Select 
-              value={language} 
-              onValueChange={(value: TProjectCard["language"]) => setLanguage(value)}
+            <label htmlFor="language" className="text-right">
+              Language
+            </label>
+            <Select
+              value={language}
+              onValueChange={(value: TProjectCard["language"]) =>
+                setLanguage(value)
+              }
             >
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Select language" />
@@ -102,9 +141,9 @@ export function CreateProjectDialog({ onCreateProject }: CreateProjectDialogProp
           </div>
         </div>
         <DialogFooter>
-          <Button 
-            type="submit" 
-            onClick={handleSubmit} 
+          <Button
+            type="submit"
+            onClick={handleSubmit}
             className="bg-[#0050FF] hover:bg-[#0040CC]"
           >
             Create project
