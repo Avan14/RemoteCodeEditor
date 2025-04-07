@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowDown, Rocket, Users } from "lucide-react";
-
+import { componentString } from "../../components/Constants/constants";
 export const Hero2 = () => {
   return (
     <div className="w-4/5 mx-auto mt-16 mb-24">
@@ -16,16 +16,17 @@ export const Hero2 = () => {
         </motion.div>
       </div>
       <div className="container mx-auto px-4 py-16">
-      <div className="flex flex-col items-center text-center text-white">
-        <Rocket className="w-16 h-16 mb-6" />
-        <h1 className="text-5xl font-bold mb-4">Welcome to Our Platform</h1>
-        <p className="text-xl text-gray-300 max-w-2xl">
-          Experience the future of digital innovation with our cutting-edge solutions
-        </p>
+        <div className="flex flex-col items-center text-center text-white">
+          <Rocket className="w-16 h-16 mb-6" />
+          <h1 className="text-5xl font-bold mb-4">Welcome to Our Platform</h1>
+          <p className="text-xl text-gray-300 max-w-2xl">
+            Experience the future of digital innovation with our cutting-edge
+            solutions
+          </p>
+        </div>
       </div>
-    </div>
       <div className="flex flex-col md:flex-row items-center relative">
-        <motion.div 
+        <motion.div
           initial={{ x: -50, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           viewport={{ once: true }}
@@ -35,35 +36,99 @@ export const Hero2 = () => {
           <div className="rounded-xl overflow-hidden bg-black/20 border border-gray-800 backdrop-blur-md shadow-xl group">
             <div className="bg-black/40 py-2 px-4 border-b border-gray-800 flex items-center justify-between">
               <div className="text-sm text-white">RemoteCodeEditor Session</div>
-              <div className="text-xs px-2 py-0.5 rounded-full bg-[#0050FF]/20 text-blue-400 border border-blue-500/30">Live</div>
-            </div>
-            
-            <div className="p-4">
-              <div className="bg-black/30 rounded-md p-3 border border-gray-800 font-mono text-sm overflow-hidden">
-                {/* Code content remains the same */}
-                {/* ... existing code content ... */}
+              <div className="text-xs px-2 py-0.5 rounded-full bg-[#0050FF]/20 text-blue-400 border border-blue-500/30">
+                Live
               </div>
-              
+            </div>
+
+            <div className="p-4">
+              <div className="bg-black/30 rounded-md p-3 border border-gray-800 font-mono text-sm overflow-auto text-white">
+                <pre className="whitespace-pre-wrap">
+                  <code>
+                    <span className="text-purple-400">useEffect</span>
+                    <span className="text-white">(() =&gt; </span>
+                    {"{\n"}
+                    &nbsp;&nbsp;<span className="text-emerald-400">
+                      const
+                    </span>{" "}
+                    fetchData ={" "}
+                    <span className="text-white">async () =&gt; </span>
+                    {"{\n"}
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span className="text-emerald-400">try</span> {"{\n"}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span className="text-emerald-400">const</span> response ={" "}
+                    <span className="text-blue-400">await</span> fetch(
+                    <span className="text-green-400">
+                      'https://api.example.com/data'
+                    </span>
+                    );
+                    {"\n"}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span className="text-emerald-400">const</span> result ={" "}
+                    <span className="text-blue-400">await</span>{" "}
+                    response.json();
+                    {"\n"}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setData(result);
+                    {"\n"}
+                    &nbsp;&nbsp;&nbsp;&nbsp;{"}"}{" "}
+                    <span className="text-emerald-400">catch</span> (error){" "}
+                    {"{\n"}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error(
+                    <span className="text-green-400">
+                      'Error fetching data:'
+                    </span>
+                    , error);
+                    {"\n"}
+                    &nbsp;&nbsp;&nbsp;&nbsp;{"}"}
+                    {"\n"}
+                    &nbsp;&nbsp;{"}"}
+                    {"\n\n"}
+                    &nbsp;&nbsp;fetchData();{"\n\n"}
+                    &nbsp;&nbsp;<span className="text-emerald-400">
+                      return
+                    </span>{" "}
+                    () =&gt; {"{\n"}
+                    &nbsp;&nbsp;&nbsp;&nbsp;setData(
+                    <span className="text-purple-400">null</span>);
+                    {"\n"}
+                    &nbsp;&nbsp;{"}"};{"\n"}
+                    {"}"}, []);
+                  </code>
+                </pre>
+              </div>
+
               {/* User activity section with updated styling */}
               <div className="mt-4 bg-black/30 backdrop-blur-sm rounded-md p-2 border border-gray-800">
                 <div className="flex items-start gap-2">
-                  <div className="w-5 h-5 rounded-full bg-[#0050FF] flex items-center justify-center text-[10px] font-bold mt-0.5">J</div>
+                  <div className="w-5 h-5 rounded-full bg-[#0050FF] flex items-center justify-center text-[10px] font-bold mt-0.5">
+                    J
+                  </div>
                   <div>
-                    <div className="text-xs font-medium text-white"> useEffect hook</div>
-                    <div className="text-xs text-gray-400 mt-0.5">5 seconds ago</div>
+                    <div className="text-xs font-medium text-white">
+                      {" "}
+                      useEffect hook
+                    </div>
+                    <div className="text-xs text-gray-400 mt-0.5">
+                      5 seconds ago
+                    </div>
                   </div>
                 </div>
               </div>
-              
+
               <div className="mt-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="flex -space-x-1">
-                    <div className="w-6 h-6 rounded-full bg-[#0050FF]/20 border border-[#0050FF]/30 flex items-center justify-center text-[10px] z-20">J</div>
-                    <div className="w-6 h-6 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-[10px] z-10">T</div>
+                    <div className="w-6 h-6 rounded-full bg-[#0050FF]/20 border border-[#0050FF]/30 flex items-center justify-center text-[10px] z-20">
+                      J
+                    </div>
+                    <div className="w-6 h-6 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-[10px] z-10">
+                      T
+                    </div>
                   </div>
                   <div className="text-xs text-gray-400">Edit now</div>
                 </div>
-                
+
                 <motion.div
                   initial={{ x: 10, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
@@ -111,14 +176,18 @@ export const Hero2 = () => {
               </div>
             </motion.div>
             <h3 className="text-xl font-semibold mb-3 relative z-10 text-white">
-              Real-time PrevieW
+              Real-time Preview
             </h3>
             <p className="text-gray-400 relative z-10">
-            CodePulse is a cutting-edge remote code editor designed for modern developers who demand flexibility without compromising power. Built for seamless collaboration across time zones and devices, CodePulse eliminates the barriers between your ideas and their implementation.
+              CodePulse is a cutting-edge remote code editor designed for modern
+              developers who demand flexibility without compromising power.
+              Built for seamless collaboration across time zones and devices,
+              CodePulse eliminates the barriers between your ideas and their
+              implementation.
             </p>
           </div>
         </motion.div>
       </div>
     </div>
   );
-}
+};

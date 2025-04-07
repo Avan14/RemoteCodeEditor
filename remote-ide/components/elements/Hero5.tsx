@@ -30,7 +30,7 @@ const LivePreviewFeature = () => {
   ];
   
   return (
-    <div className="bg-gray-900 text-white p-6 rounded-lg shadow-xl w-full max-w-4xl mx-auto">
+    <div className="bg-gray-900 text-white p-6 rounded-lg shadow-xl w-full max-w-4xl mx-auto ">
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center space-x-2">
           <Eye className="text-blue-500" size={24} /> {/* Adjusted color */}

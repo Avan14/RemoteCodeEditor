@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useUserdata } from "../../app/context/UserDataContext";
 import axios from "axios";
+import { User, User2Icon } from "lucide-react";
 
 export default function Navbar() {
   const clerk = useClerk();
@@ -76,7 +77,7 @@ export default function Navbar() {
       <nav className="flex justify-between items-center bg-black px-6 py-4 text-white z-50 border-b-2 border-gray-800 sticky top-0">
         <div className="flex items-center space-x-2">
           <span className="text-5xl font-bolder text-[#1E90FF] font-[Redwing-M] px-3">
-          CodePulse
+          CODEPULSE
           </span>
 
           <DropdownMenu>
@@ -84,10 +85,10 @@ export default function Navbar() {
               Features ▾
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-white text-black">
-              <DropdownMenuItem className="hover:bg-slate-300 border-b-2 border-gray-400 rounded-r-none">
+              <DropdownMenuItem className="hover:bg-slate-300 border-b-2 border-gray-800">
                 AI code
               </DropdownMenuItem>
-              <DropdownMenuItem className="hover:bg-slate-300 border-b-2 border-gray-400">
+              <DropdownMenuItem className="hover:bg-slate-300 border-b-2 border-gray-800">
                 BOOTSTRAP
               </DropdownMenuItem>
               <DropdownMenuItem className="hover:bg-slate-300">
@@ -140,7 +141,7 @@ export default function Navbar() {
               <DropdownMenuTrigger asChild>
                 <Button className="bg-black w-6">
                   <Avatar className="w-9 h-9 text-black text-xl">
-                    <AvatarFallback>A</AvatarFallback>
+                    <AvatarFallback><User2Icon></User2Icon></AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
