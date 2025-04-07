@@ -44,12 +44,12 @@ const Hero4 = () => {
           <div className="bg-gray-800 flex items-center justify-between px-4 py-3 border-b border-gray-700">
             <div className="flex items-center">
               <div className="text-white text-xl font-semibold mr-4">
-                CodePule
+                CodePulse
               </div>
             </div>
             <div>
               <button className="bg-gray-700 text-gray-300 px-4 py-1 rounded text-sm">
-                Select language
+                Cpp
               </button>
             </div>
           </div>

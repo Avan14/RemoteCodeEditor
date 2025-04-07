@@ -27,7 +27,7 @@ const Hero3 = () => {
 
   const [typingEffect, setTypingEffect] = useState("");
   const codeString =
-    "import { useState } from 'react';\nimport { Socket } from '@/lib/socket';\n\nfunction CodePulseEditor() {\n  const [code, setCode] = useState('');\n  const [Language, setLanguage] = useState('JavaScript');\n\n  const syncChanges = (changes) => {\n    Socket.emit('code:update', changes);\n  };\n\n  // Realtime collaboration logic\n  return (\n    <div className=\"editor-container\">\n      {/* Editor implementation */}\n    </div>\n  )\n}";
+    "import { useState } from 'react';\nimport { Socket } from '@/lib/socket';\n\nfunction CodePulseEditor(){   \n\n  const [code, setCode] = useState('');\n  const [Language, setLanguage] = useState('JavaScript');\n\n  const syncChanges = (changes) => {\n    Socket.emit('code:update', changes);\n  };\n\n  // Realtime collaboration logic\n  return (\n    <div className=\"editor-container\">\n      {/* Editor implementation */}\n    </div>\n  )\n}";
 
   useEffect(() => {
     let i = 0;

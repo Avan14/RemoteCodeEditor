@@ -1,33 +1,12 @@
+"use client";
+
 import { useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const Technologies = [
-  { name: "JavaScript" },
-  { name: "TypeScript" },
-  { name: "HTML" },
-  { name: "CSS" },
-  { name: "React" },
-  { name: "Angular" },
-  { name: "Node.js" },
-  { name: "MongoDB" },
-  { name: "Cpp" },
-  { name: "JavaScript" },
-  { name: "Python" },
-  { name: "Java" },
-  { name: "Csharp" },
-  { name: "TypeScript" },
-  { name: "Php" },
-  { name: "Go" },
-  { name: "Ruby" },
-  { name: "Rust" },
-  { name: "Kotlin" },
-  { name: "Swift" },
-  { name: "Sqlite3" },
-  { name: "C" },
-  { name: "Powershell" },
-  { name: "Bash" },
-  { name: "Matl" },
-  { name: "Dart" },
+  "JavaScript", "TypeScript", "HTML", "CSS", "React", "Angular", "Node.js", "MongoDB",
+  "Cpp", "Python", "Java", "Csharp", "Php", "Go", "Ruby", "Rust", "Kotlin", "Swift",
+  "Sqlite3", "C", "Powershell", "Bash", "Matl", "Dart"
 ];
 
 export default function Hero() {
@@ -37,97 +16,72 @@ export default function Hero() {
     const container = techSectionRef.current;
     if (!container) return;
 
-    const scrollAmount = container.scrollWidth ;
+    const scrollAmount = container.scrollWidth;
 
     const scrollSmoothly = () => {
       container.scrollBy({ left: scrollAmount, behavior: "smooth" });
       setTimeout(() => {
-        container.scrollBy({ left: -scrollAmount , behavior: "smooth" });
+        container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
       }, 2000);
     };
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
-          scrollSmoothly();
-        }
+        if (entries[0].isIntersecting) scrollSmoothly();
       },
       { threshold: 0.5 }
     );
 
     observer.observe(container);
-
     return () => observer.disconnect();
   }, []);
 
   return (
-    <div className="relative bg-gradient-to-br from-[#0d0d0d] via-[#121212] to-[#0a0a0a] p-8 rounded-3xl shadow-2xl w-[90%] m-auto mt-12 border border-[#1a1a1a] overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#0050FF]/10 to-transparent pointer-events-none" />
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-transparent via-[#0050FF]/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[1200ms]" />
-
+    <div className="relative bg-[#000] p-8 rounded-3xl w-[90%] m-auto mt-16 border  border-[#8f8c8c] overflow-hidden">
       <div className="relative z-10 text-white space-y-6">
-        <h1 className="text-6xl lg:text-8xl font-extrabold font-[Redwing-M] text-white">
+        <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight text-white font-[Redwing-M]">
           Focus on your code.
         </h1>
-        <h2 className="text-4xl lg:text-6xl font-bold text-[#5ea2ff] font-[Redwing-M]">
+        <h2 className="text-3xl lg:text-5xl font-bold text-neutral-400 font-[Redwing-M] tracking-tight">
           Let CodePulse do the rest.
         </h2>
 
-        <div className="mt-8 bg-[#0e0e0e]/60 backdrop-blur-lg border border-[#1f1f1f] p-8 rounded-2xl relative overflow-hidden group shadow-xl">
-          <div className="absolute inset-0 bg-gradient-to-br from-transparent via-[#0050FF]/10 to-transparent pointer-events-none" />
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-r from-transparent via-[#0050FF]/10 to-transparent -translate-x-full group-hover:translate-x-full transform" />
-
-          <h2 className="relative text-3xl font-semibold text-white">
+        <div className="mt-10 bg-[#0a0a0a] border border-[#4d4d4d] p-6 rounded-2xl">
+          <h2 className="text-2xl font-semibold text-white  font-[Redwing-L]">
             Ready to use out of the box
           </h2>
-          <p className="relative mt-3 text-gray-400 text-lg">
-            Get straight to coding without having to install and configure lots
-            of plugins. CodePulse includes everything you need for modern
-            development.
+          <p className="mt-2 text-neutral-400 text-base">
+            Get straight to coding without installing and configuring tons of plugins.
+            CodePulse includes everything you need for modern development.
           </p>
 
           <div
             ref={techSectionRef}
-            className="relative mt-8 overflow-x-auto whitespace-nowrap scroll-smooth will-change-transform"
+            className="mt-8 overflow-x-auto whitespace-nowrap scroll-smooth pb-2"
           >
-            <div className="grid grid-flow-col auto-cols-max grid-rows-2 gap-4">
-              {Technologies.map((tech, idx) => (
+            <div className="grid grid-flow-col auto-cols-max grid-rows-2 gap-6 px-1">
+              {Technologies.map((name, idx) => (
                 <Card
-                  key={tech.name + idx}
-                  className="group relative bg-[#0e0e0e]/60 border border-[#1f1f1f] backdrop-blur-md rounded-xl p-4 shadow-md hover:shadow-blue-500/30 transition-shadow duration-300 min-w-[120px]"
+                  key={name + idx}
+                  className="bg-[#101010] border border-[#1a1a1a] rounded-xl p-4 min-w-[120px] hover:border-neutral-700 transition-colors duration-200"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#0050FF]/5 to-transparent pointer-events-none" />
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-r from-transparent via-[#0050FF]/10 to-transparent -translate-x-full group-hover:translate-x-full transform" />
-
-                  <CardContent className="relative text-4xl text-center animate-float">
-                  <img src={`/icons/${tech.name}.png`} alt={tech.name} className="w-12 h-12 mx-auto" />
-
-
+                  <CardContent>
+                    <img
+                      src={`/icons/${name.toLowerCase()}.png`}
+                      alt={name}
+                      className="w-12 h-12 mx-auto object-contain"
+                      onError={(e) => (e.currentTarget.style.display = "none")}
+                    />
+                    <p className="text-neutral-200 mt-2 text-center text-sm tracking-wide">
+                      {name}
+                    </p>
                   </CardContent>
-                  <p className="relative text-white mt-2 text-center text-sm">
-                    {tech.name}
-                  </p>
                 </Card>
               ))}
             </div>
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-6px);
-          }
-        }
-        .animate-float {
-          animation: float 3s ease-in-out infinite;
-        }
-      `}</style>
     </div>
   );
 }

@@ -176,7 +176,7 @@ export const Hero2 = () => {
               </div>
             </motion.div>
             <h3 className="text-xl font-semibold mb-3 relative z-10 text-white">
-              Real-time Preview
+              No Need to Install Compliers
             </h3>
             <p className="text-gray-400 relative z-10">
               CodePulse is a cutting-edge remote code editor designed for modern
