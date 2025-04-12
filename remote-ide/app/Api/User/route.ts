@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import UserModel from "./modals/User"; // Assuming UserModel is correctly imported from the correct location
-import { UserSchemaType } from "./schema/types"; // Adjust imports as per your schema definitions
+import UserModel from "./modals/User";
 import { NextRequest, NextResponse } from "next/server";
 
 // Connect to MongoDB
@@ -43,6 +42,8 @@ export async function POST(req: NextRequest) {
   }
 }
 
+
+// end-point for updating projects in the userd database
 export async function PUT(req: NextRequest) {
   try {
     const body = await req.json();

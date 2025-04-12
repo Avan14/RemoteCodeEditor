@@ -26,7 +26,7 @@ const Hero4 = () => {
   return (
     <div className="w-full  py-16 px-4">
       <div className="max-w-6xl mx-auto text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+        <h1 className="text-5xl md:text-5xl font-bold text-white mb-4 font-[Redwing-M]">
           AI-Powered Coding Assistant
         </h1>
         <div className="w-24 h-1 bg-blue-500 mx-auto mb-6"></div>

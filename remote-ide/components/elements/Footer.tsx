@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 z-10 relative">
         {/* Logo + Intro */}
         <div className="space-y-4">
-          <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-pink-400">CODE_PULSE</h2>
+          <h2 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-pink-400 font-[RedWing-M]">CODEPULSE</h2>
           <p className="text-sm text-gray-300">Code. Compile. Deploy. 🚀</p>
           <p className="text-sm text-gray-400">support@compiler.io</p>
           <p className="text-sm text-gray-400">123 Code Street, Dev City</p>

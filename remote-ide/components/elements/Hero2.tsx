@@ -1,30 +1,13 @@
 import { motion } from "framer-motion";
 import { ArrowDown, Rocket, Users } from "lucide-react";
-import { componentString } from "../../components/Constants/constants";
-export const Hero2 = () => {
+import { Button } from "../ui/button";
+
+const Hero2 = () => {
   return (
     <div className="w-4/5 mx-auto mt-16 mb-24">
-      {/* Scroll Down Indicator */}
-      <div className="flex justify-center mb-8">
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="flex flex-col items-center gap-2 text-blue-500"
-        >
-          <span className="text-sm font-semibold">Discover Features</span>
-          <ArrowDown className="h-5 w-5" />
-        </motion.div>
-      </div>
-      <div className="container mx-auto px-4 py-16">
-        <div className="flex flex-col items-center text-center text-white">
-          <Rocket className="w-16 h-16 mb-6" />
-          <h1 className="text-5xl font-bold mb-4">Welcome to Our Platform</h1>
-          <p className="text-xl text-gray-300 max-w-2xl">
-            Experience the future of digital innovation with our cutting-edge
-            solutions
-          </p>
-        </div>
-      </div>
+      <h2 className="text-6xl md:text-5xl font-bold text-white mb-20 text-center font-[Redwing-M]">
+         Code , Anywhere. Anytime.
+      </h2>
       <div className="flex flex-col md:flex-row items-center relative">
         <motion.div
           initial={{ x: -50, opacity: 0 }}
@@ -32,7 +15,6 @@ export const Hero2 = () => {
           viewport={{ once: true }}
           className="md:w-1/2 md:pr-8 mt-8 md:mt-0"
         >
-          {/* Real-time Collaboration Demo */}
           <div className="rounded-xl overflow-hidden bg-black/20 border border-gray-800 backdrop-blur-md shadow-xl group">
             <div className="bg-black/40 py-2 px-4 border-b border-gray-800 flex items-center justify-between">
               <div className="text-sm text-white">RemoteCodeEditor Session</div>
@@ -98,7 +80,6 @@ export const Hero2 = () => {
                 </pre>
               </div>
 
-              {/* User activity section with updated styling */}
               <div className="mt-4 bg-black/30 backdrop-blur-sm rounded-md p-2 border border-gray-800">
                 <div className="flex items-start gap-2">
                   <div className="w-5 h-5 rounded-full bg-[#0050FF] flex items-center justify-center text-[10px] font-bold mt-0.5">
@@ -106,7 +87,6 @@ export const Hero2 = () => {
                   </div>
                   <div>
                     <div className="text-xs font-medium text-white">
-                      {" "}
                       useEffect hook
                     </div>
                     <div className="text-xs text-gray-400 mt-0.5">
@@ -145,7 +125,6 @@ export const Hero2 = () => {
           </div>
         </motion.div>
 
-        {/* Timeline Node */}
         <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
           <motion.div
             initial={{ scale: 0 }}
@@ -188,6 +167,25 @@ export const Hero2 = () => {
           </div>
         </motion.div>
       </div>
+
+      <div className="mt-16 bg-gradient-to-r from-gray-900 to-black p-8 rounded-2xl shadow-xl">
+        <h2 className="text-6xl md:text-4xl font-bold text-white mb-4 justify-center mx-auto font-[Redwing-M]">
+          Try Codepulse Now
+        </h2>
+        <p className="text-gray-200 text-lg mb-6 max-w-2xl mx-auto">
+          Start building your dream projects with our collaborative cloud editor
+          that brings your code to life. Experience the power of real-time
+          collaboration and intelligent code assistance.
+        </p>
+        <Button
+          variant="default"
+          className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition-all shadow-md"
+        >
+          Start Building
+        </Button>
+      </div>
     </div>
   );
 };
+
+export default Hero2;

@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 import { UserType } from "../CodeEditor/[id]/FileExplorer/types";
 
-// Define the shape of context value
+// shape of context value
 type UserContextType = {
   user: UserType | null;
   setUser: (user: UserType) => void;

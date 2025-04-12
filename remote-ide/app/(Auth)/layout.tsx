@@ -1,4 +1,4 @@
-import { ArrowBigLeft, ArrowBigLeftIcon } from "lucide-react";
+import { ArrowBigLeftIcon } from "lucide-react";
 import Link from "next/link";
 
 export default function AuthLayout({
