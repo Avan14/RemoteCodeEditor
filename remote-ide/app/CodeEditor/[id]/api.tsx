@@ -17,6 +17,11 @@ export const ExecuteCode = async (
       throw new Error("Unsupported language selected.");
     }
 
+    console.log({
+      language,
+      version: LANGUAGE_VERSIONS[language],
+      files: [{ content: SourceCode }],
+    })
     const response = await ExecuteCodeAPI.post("/execute", {
       language,
       version: LANGUAGE_VERSIONS[language],
