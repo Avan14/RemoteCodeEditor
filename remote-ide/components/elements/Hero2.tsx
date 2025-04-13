@@ -6,7 +6,7 @@ const Hero2 = () => {
   return (
     <div className="w-4/5 mx-auto mt-16 mb-24">
       <h2 className="text-6xl md:text-5xl font-bold text-white mb-20 text-center font-[Redwing-M]">
-         Code , Anywhere. Anytime.
+        Code , Anywhere. Anytime.
       </h2>
       <div className="flex flex-col md:flex-row items-center relative">
         <motion.div
@@ -27,86 +27,53 @@ const Hero2 = () => {
               <div className="bg-black/30 rounded-md p-3 border border-gray-800 font-mono text-sm overflow-auto text-white">
                 <pre className="whitespace-pre-wrap">
                   <code>
-                    <span className="text-purple-400">useEffect</span>
-                    <span className="text-white">(() =&gt; </span>
-                    {"{\n"}
-                    &nbsp;&nbsp;<span className="text-emerald-400">
-                      const
-                    </span>{" "}
-                    fetchData ={" "}
-                    <span className="text-white">async () =&gt; </span>
-                    {"{\n"}
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <span className="text-emerald-400">try</span> {"{\n"}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span className="text-emerald-400">const</span> response ={" "}
-                    <span className="text-blue-400">await</span> fetch(
-                    <span className="text-green-400">
-                      'https://api.example.com/data'
-                    </span>
-                    );
-                    {"\n"}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span className="text-emerald-400">const</span> result ={" "}
-                    <span className="text-blue-400">await</span>{" "}
-                    response.json();
-                    {"\n"}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setData(result);
-                    {"\n"}
-                    &nbsp;&nbsp;&nbsp;&nbsp;{"}"}{" "}
-                    <span className="text-emerald-400">catch</span> (error){" "}
-                    {"{\n"}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error(
-                    <span className="text-green-400">
-                      'Error fetching data:'
-                    </span>
-                    , error);
-                    {"\n"}
-                    &nbsp;&nbsp;&nbsp;&nbsp;{"}"}
-                    {"\n"}
-                    &nbsp;&nbsp;{"}"}
+                    <span className="text-purple-400">#include</span>{" "}
+                    <span className="text-white">&lt;vector&gt;</span>
                     {"\n\n"}
-                    &nbsp;&nbsp;fetchData();{"\n\n"}
-                    &nbsp;&nbsp;<span className="text-emerald-400">
-                      return
-                    </span>{" "}
-                    () =&gt; {"{\n"}
-                    &nbsp;&nbsp;&nbsp;&nbsp;setData(
-                    <span className="text-purple-400">null</span>);
+                    <span className="text-emerald-400">int</span> binarySearch(
+                    <span className="text-white">
+                      std::vector&lt;int&gt;& arr, int target
+                    </span>
+                    ) {"{\n"}
+                      <span className="text-emerald-400">int</span> left ={" "}
+                    <span className="text-purple-400">0</span>;{"\n"}
+                      <span className="text-emerald-400">int</span> right =
+                    arr.size() - <span className="text-purple-400">1</span>;
+                    {"\n\n"}
+                      <span className="text-emerald-400">while</span> (left
+                    &gt;= right) {"{\n"}
+                        <span className="text-emerald-400">int</span> mid = left
+                    + (right - left) /{" "}
+                    <span className="text-purple-400">2</span>;{"\n\n"}
+                        <span className="text-emerald-400">if</span> (arr[mid]
+                    == target) {"{\n"}
+                          <span className="text-emerald-400">return</span> mid;
                     {"\n"}
-                    &nbsp;&nbsp;{"}"};{"\n"}
-                    {"}"}, []);
+                        {"}"}
+                    {"\n\n"}
+                        <span className="text-emerald-400">if</span> (arr[mid]
+                    &gt; target) {"{\n"}
+                          left = mid +{" "}
+                    <span className="text-purple-400">1</span>;{"\n"}
+                        {"}"} <span className="text-emerald-400">else</span>{" "}
+                    {"{\n"}
+                          right = mid -{" "}
+                    <span className="text-purple-400">1</span>;{"\n"}
+                        {"}"}
+                    {"\n"}
+                      {"}"}
+                    {"\n\n"}
+                      <span className="text-emerald-400">return</span>{" "}
+                    <span className="text-purple-400">-1</span>;{"\n"}
+                    {"}"}
                   </code>
                 </pre>
               </div>
 
-              <div className="mt-4 bg-black/30 backdrop-blur-sm rounded-md p-2 border border-gray-800">
-                <div className="flex items-start gap-2">
-                  <div className="w-5 h-5 rounded-full bg-[#0050FF] flex items-center justify-center text-[10px] font-bold mt-0.5">
-                    J
-                  </div>
-                  <div>
-                    <div className="text-xs font-medium text-white">
-                      useEffect hook
-                    </div>
-                    <div className="text-xs text-gray-400 mt-0.5">
-                      5 seconds ago
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               <div className="mt-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="flex -space-x-1">
-                    <div className="w-6 h-6 rounded-full bg-[#0050FF]/20 border border-[#0050FF]/30 flex items-center justify-center text-[10px] z-20">
-                      J
-                    </div>
-                    <div className="w-6 h-6 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-[10px] z-10">
-                      T
-                    </div>
-                  </div>
-                  <div className="text-xs text-gray-400">Edit now</div>
+                  <div className="flex -space-x-1"></div>
+                  <div className="text-xs text-gray-400">Compiled in 8ms </div>
                 </div>
 
                 <motion.div
@@ -151,18 +118,18 @@ const Hero2 = () => {
               className="mb-6"
             >
               <div className="relative z-10 h-16 w-16 rounded-2xl bg-[#0050FF]/10 flex items-center justify-center">
-                <Users className="h-8 w-8 text-[#0050FF]" />
+                <Rocket className="h-8 w-8 text-[#0050FF]" />
               </div>
             </motion.div>
             <h3 className="text-xl font-semibold mb-3 relative z-10 text-white">
-              No Need to Install Compliers
+              Blazing-Fast Code Execution
             </h3>
             <p className="text-gray-400 relative z-10">
               CodePulse is a cutting-edge remote code editor designed for modern
               developers who demand flexibility without compromising power.
-              Built for seamless collaboration across time zones and devices,
-              CodePulse eliminates the barriers between your ideas and their
-              implementation.
+              Execute algorithms like binary search instantly with our optimized
+              runtime environment, ensuring your code runs smoothly across
+              devices and collaborations.
             </p>
           </div>
         </motion.div>

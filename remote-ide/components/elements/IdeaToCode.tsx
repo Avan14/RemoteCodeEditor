@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useUser } from "@clerk/nextjs";
 
 const options = [
   { name: "Online shop", icon: "🛍️" },
@@ -12,6 +13,8 @@ const options = [
 ];
 
 export default function IdeaToApp() {
+  const { user: clerkUser, isSignedIn } = useUser();
+
   return (
     <div className="relative flex flex-col items-center justify-center text-white p-10 py-20  bg-black">
       <h1 className="text-9xl font-bold text-center font-[Redwing-M]">
@@ -68,7 +71,7 @@ export default function IdeaToApp() {
             >
               📎Attach
             </Button>
-            <Link href="/DashBoard">
+            <Link href={isSignedIn ? "/DashBoard" : "/sign-up"}>
               <Button className="bg-[#1d4ed8] text-xl font-bold hover:bg-[#1d6ed8] text-white">
                 🚀 Start building
               </Button>
