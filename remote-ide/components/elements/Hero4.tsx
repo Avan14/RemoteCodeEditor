@@ -7,7 +7,7 @@ const Hero4 = () => {
   const codeString = "Start typing your code here...";
 
   const [chatVisible, setChatVisible] = useState(true);
-  const [messageText, setMessageText] = useState("");
+  const [messageText, setMessageText] = useState("Help me with my code");
 
   useEffect(() => {
     let i = 0;
@@ -316,7 +316,7 @@ const Hero4 = () => {
       className="relative bg-black/30 border border-white/10 backdrop-blur-md rounded-2xl p-6 transition-all hover:scale-[1.03] hover:shadow-2xl duration-300 overflow-hidden"
     >
       <div className={`absolute -top-10 -left-10 w-40 h-40 bg-gradient-to-br ${feature.gradient} opacity-30 blur-2xl rounded-full`} />
-      <h3 className={`text-2xl font-bold text-white mb-3 bg-clip-text text-transparent bg-gradient-to-r ${feature.gradient}`}>
+      <h3 className={`text-3xl font-[Redwing-L] font-bold text-white mb-3 bg-clip-text text-transparent bg-gradient-to-r ${feature.gradient}`}>
         {feature.title}
       </h3>
       <p className="text-gray-300 text-sm z-10 relative">{feature.desc}</p>
