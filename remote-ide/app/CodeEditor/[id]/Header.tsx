@@ -14,6 +14,7 @@ import { Play, Settings, Code2, BotMessageSquare } from "lucide-react";
 import { useState } from "react";
 import { HeaderProps } from "./page";
 import { ExecuteCode } from "./api";
+import  ExecuteCodecloud  from "./CloudApi";
 import { LANGUAGE_VERSIONS } from "./constants";
 import Link from "next/link";
 import { Chatbot } from "./chatbot";
@@ -62,7 +63,30 @@ export const Header = ({
       setLoading(false);
     }
   };
-
+  const handleRuncloud = async () => {
+    if (!Language || !code) {
+      seterror(true);
+      setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+      }, 3000);
+      setoutput("Please select a language and write some code");
+      return;
+    }
+    setLoading(true);
+    try {
+      console.log(code);
+      // @ts-ignore
+      const outputcode = await ExecuteCodecloud(Language, code, seterror);
+      setoutput(outputcode);
+      seterror(false);
+    } catch (error) {
+      setoutput("Error: " + error);
+      seterror(true);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <header className="relative bg-gradient-to-br from-[#000000] via-[#0A0A0A] to-[#000000] overflow-hidden transition-all duration-300 hover:border-blue-950 p-4 shadow-lg">
       {/* Metallic overlay */}
@@ -121,6 +145,18 @@ export const Header = ({
               <Play className="h-4 w-4" />
             )}
             <span>Run</span>
+          </button>
+          <button
+            onClick={handleRuncloud}
+            disabled={loading}
+            className="px-4 py-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/20 transition-all duration-300 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_0_15px_rgba(0,80,255,0.15)] rounded-md flex items-center space-x-2 disabled:opacity-50"
+          >
+            {loading ? (
+              <div className="animate-spin h-4 w-4 border-2 border-gray-200 border-t-transparent rounded-full"></div>
+            ) : (
+              <Play className="h-4 w-4" />
+            )}
+            <span>Run on Cloud</span>
           </button>
           <button className="p-2 hover:bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-md transition-all duration-300">
             <Settings className="h-5 w-5" />
