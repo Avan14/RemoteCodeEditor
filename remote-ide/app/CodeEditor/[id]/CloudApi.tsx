@@ -1,7 +1,7 @@
 import axios from "axios";
 import { LANGUAGE_VERSIONS } from "./constants";
 
-const BASE_URL = process.env.CLOUD_URL as string;
+// const BASE_URL = process.env.CLOUD_URL as string;
 
 type Language = keyof typeof LANGUAGE_VERSIONS;
 
@@ -10,10 +10,10 @@ type Language = keyof typeof LANGUAGE_VERSIONS;
   SourceCode: string,
 ) => {
     console.log("hi");
-    console.log(BASE_URL);
+    // console.log(BASE_URL);
   try {
     console.log(SourceCode);
-    const response = await axios.post( BASE_URL+"/run", {
+    const response = await axios.post( "http://143.110.245.12:3000/run", {
         code: SourceCode,
       }, {
         headers: {
