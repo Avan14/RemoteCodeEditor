@@ -1,16 +1,18 @@
+// CodeEditor/page.tsx
+
 "use client";
 
 import { useState, useRef, useEffect } from "react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import {
-  Terminal
-} from "lucide-react";
+import { Terminal } from "lucide-react";
 import Editor from "@monaco-editor/react";
 import { Header } from "./Header";
 import { CODE_SNIPPETS, FILE_NAMES, THEMES } from "./constants";
 
 import { Button } from "@/components/ui/button";
 import { FileExplorer } from "./FileExplorer/FileExplorer";
+import { useFileStore } from "@/hooks/useFileStore";
+import { useEditorStore } from "@/hooks/useEditorStore";
 
 export interface HeaderProps {
   code: string;
@@ -22,26 +24,57 @@ export interface HeaderProps {
 
 export default function CodeEditor() {
   const [Language, setLanguage] = useState<string>("");
-  const [code, setCode] = useState<string>("");
   const editorRef = useRef<any>(null);
   const [output, setOutput] = useState("Terminal output will appear here...");
   const [error, setError] = useState(false);
-
-  useEffect(() => {
-    //@ts-ignore
-    setCode(CODE_SNIPPETS[Language]);
-  }, [Language]);
+  const { activeFileId, files, updateFileLanguage } = useFileStore();
+  const { contents, updateContent } = useEditorStore();
+  const code = activeFileId ? contents[activeFileId] ?? "" : "";
+  
+  // Get the active file
+  const activeFile = activeFileId ? files.find((f) => f.id === activeFileId) : null;
 
   function handleEditorDidMount(editor: any) {
     editorRef.current = editor;
     editor.focus();
   }
 
+  // Handle language changes from Header - update the active file's language
+  const handleLanguageChange = (newLanguage: string) => {
+    setLanguage(newLanguage);
+    if (activeFileId) {
+      updateFileLanguage(activeFileId, newLanguage);
+    }
+  };
+
+  // Sync language state with active file's language when file changes
+  useEffect(() => {
+    if (activeFile?.language) {
+      setLanguage(activeFile.language);
+    } else if (activeFile && !activeFile.language) {
+      // If file has no language, set default to empty (user can select)
+      setLanguage("");
+    }
+  }, [activeFile?.id]);
+
+  // Initialize code snippet when file is first opened
+  useEffect(() => {
+    if (!activeFileId || !activeFile) return;
+
+    // Only initialize if file has no content and has a language
+    if (contents[activeFileId] === undefined && activeFile.language) {
+      const snippet = CODE_SNIPPETS[activeFile.language as keyof typeof CODE_SNIPPETS] ?? "";
+      if (snippet) {
+        updateContent(activeFileId, snippet);
+      }
+    }
+  }, [activeFileId, activeFile?.language]);
+
   return (
     <div className="h-screen bg-gradient-to-br from-[#000000] via-[#0A0A0A] to-[#000000] text-white flex flex-col text-xs">
       <Header
         code={code}
-        setLanguage={setLanguage}
+        setLanguage={handleLanguageChange}
         Language={Language}
         setoutput={setOutput}
         seterror={setError}
@@ -54,7 +87,7 @@ export default function CodeEditor() {
             minSize={20}
             className="bg-gray-900 bg-gradient-to-br from-[#000000] via-[#0A0A0A] to-[#000000] rounded-lg shadow-md border border-blue-900"
           >
-           <FileExplorer></FileExplorer>
+            <FileExplorer></FileExplorer>
           </Panel>
           <PanelResizeHandle className="w-0.5 hover:bg-blue-500 transition-colors bg-gray-700" />
           {/* Main Editor Panel updated with gradient, shadow, and side borders */}
@@ -65,7 +98,7 @@ export default function CodeEditor() {
           >
             <div className="flex flex-row gap-1">
               <Button className="m-1 border-[1px] border-zinc-500">
-                {FILE_NAMES[Language as keyof typeof FILE_NAMES]}
+                {activeFile?.name || (Language ? FILE_NAMES[Language as keyof typeof FILE_NAMES] : "No file selected")}
               </Button>
             </div>
             <div className="h-full text-xs w-full rounded-xl overflow-auto">
@@ -77,7 +110,9 @@ export default function CodeEditor() {
                 defaultValue="Start typing your code here..."
                 onMount={handleEditorDidMount}
                 value={code}
-                onChange={(value) => setCode(value || "")}
+                onChange={(val) =>
+                  activeFileId && updateContent(activeFileId, val || "")
+                }
                 options={{
                   minimap: { enabled: false },
                   padding: { bottom: 4, top: 6 },

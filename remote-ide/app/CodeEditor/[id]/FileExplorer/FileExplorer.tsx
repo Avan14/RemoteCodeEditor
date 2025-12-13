@@ -1,6 +1,7 @@
+// FileExplorer.tsx
+
 import { FilePlus, FolderPlus, Search } from "lucide-react";
 import { FolderCom } from "./FolderCom";
-import { Folder_Example,FileTree } from "./types";
 
 export const FileExplorer = () => {
   return (
@@ -15,7 +16,7 @@ export const FileExplorer = () => {
           <Search className="h-4 w-4 text-blue-400 cursor-pointer hover:opacity-80 transition" />
         </div>
       </div>
-      <FolderCom data={Folder_Example as FileTree} />
+      <FolderCom folderId="root" />
     </div>
   );
 };
