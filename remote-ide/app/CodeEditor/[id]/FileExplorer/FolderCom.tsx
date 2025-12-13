@@ -2,29 +2,21 @@ import { useState } from "react";
 import { Folder, ChevronDown, ChevronRight, Plus } from "lucide-react";
 import { useFileStore } from "../../../../hooks/useFileStore";
 import { FileCom } from "./FileCom";
+import { AddItemPopup } from "./AddItemPopup";
 
 export const FolderCom = ({ folderId }: { folderId: string }) => {
   const [open, setOpen] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
-  const [name, setName] = useState("");
-  const [type, setType] = useState<"file" | "folder">("file");
 
-  const { files, addFile, addFolder } = useFileStore();
+  const { files } = useFileStore();
 
   const children = files.filter((f) => f.parentId === folderId);
   const folder = files.find((f) => f.id === folderId);
 
   if (!folder) return null;
 
-  const handleAdd = () => {
-    if (!name.trim()) return;
-    type === "file" ? addFile(name, folderId) : addFolder(name, folderId);
-    setName("");
-    setShowPopup(false);
-  };
-
   return (
-    <div>
+    <div className="relative">
       <div
         className="flex items-center gap-1 cursor-pointer hover:bg-blue-900/50 p-1 rounded"
         onClick={() => setOpen(!open)}
@@ -33,7 +25,7 @@ export const FolderCom = ({ folderId }: { folderId: string }) => {
         <Folder size={14} />
         <span>{folder.name}</span>
         <Plus 
-          className="ml-auto  text-white p-1 rounded" 
+          className="ml-auto text-white hover:text-blue-400 p-1 rounded transition-colors" 
           onClick={(e) => {
             e.stopPropagation();
             setShowPopup(true);
@@ -54,13 +46,11 @@ export const FolderCom = ({ folderId }: { folderId: string }) => {
       )}
 
       {showPopup && (
-        <div className="bg-black p-2 rounded border">
-          <input value={name} onChange={(e) => setName(e.target.value)} />
-          <select onChange={(e) => setType(e.target.value as any)}>
-            <option value="file">File</option>
-            <option value="folder">Folder</option>
-          </select>
-          <button onClick={handleAdd}>Add</button>
+        <div className="relative pl-4 mt-1">
+          <AddItemPopup 
+            parentId={folderId}
+            onClose={() => setShowPopup(false)}
+          />
         </div>
       )}
     </div>
