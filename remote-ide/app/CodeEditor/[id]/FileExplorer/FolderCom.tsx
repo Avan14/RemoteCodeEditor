@@ -33,7 +33,7 @@ export const FolderCom = ({ folderId }: { folderId: string }) => {
         <Folder size={14} />
         <span>{folder.name}</span>
         <Plus 
-          className="ml-auto" 
+          className="ml-auto  text-white p-1 rounded" 
           onClick={(e) => {
             e.stopPropagation();
             setShowPopup(true);
