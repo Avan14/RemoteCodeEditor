@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { File, Pencil } from "lucide-react";
 import { useFileStore } from "../../../../hooks/useFileStore";
@@ -19,7 +21,7 @@ export const FileCom = ({ fileId }: { fileId: string }) => {
         <File size={14} />
         <span>{file.name}</span>
         <Pencil 
-          size={14}
+          size={18}
           className="ml-auto opacity-0 group-hover:opacity-100 text-white hover:text-blue-400 p-1 rounded transition-all" 
           onClick={(e) => {
             e.stopPropagation();

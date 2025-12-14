@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import { useFileStore } from "../../../../hooks/useFileStore";
@@ -30,6 +32,9 @@ export const AddItemPopup = ({ parentId, initialType = "file", onClose }: AddIte
 
   // Close popup when clicking outside
   useEffect(() => {
+    // Only run on client
+    if (typeof window === "undefined") return;
+
     const handleClickOutside = (event: MouseEvent) => {
       if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
         onClose();

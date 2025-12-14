@@ -1,3 +1,5 @@
+"use client";
+
 // FileExplorer.tsx
 
 import { useState } from "react";

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Folder, ChevronDown, ChevronRight, Plus, Pencil } from "lucide-react";
 import { useFileStore } from "../../../../hooks/useFileStore";
