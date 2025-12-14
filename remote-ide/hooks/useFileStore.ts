@@ -50,6 +50,7 @@ type FileStore = {
     addFolder: (name: string, parentId: string) => void;
     setActiveFile: (id: string) => void;
     updateFileLanguage: (fileId: string, language: string) => void;
+    renameFile: (fileId: string, newName: string) => void;
 };
 
 export const useFileStore = create<FileStore>((set) => ({
@@ -101,4 +102,25 @@ export const useFileStore = create<FileStore>((set) => ({
                 file.id === fileId ? { ...file, language } : file
             ),
         })),
+
+    renameFile: (fileId, newName) =>
+        set((state) => {
+            // Update language if it's a file and extension changed
+            const file = state.files.find((f) => f.id === fileId);
+            const inferredLanguage = file?.type === "file" 
+                ? inferLanguageFromFileName(newName) 
+                : undefined;
+            
+            return {
+                files: state.files.map((file) =>
+                    file.id === fileId
+                        ? {
+                              ...file,
+                              name: newName,
+                              ...(inferredLanguage && { language: inferredLanguage }),
+                          }
+                        : file
+                ),
+            };
+        }),
 }));

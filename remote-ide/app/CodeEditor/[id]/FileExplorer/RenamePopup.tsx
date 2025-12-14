@@ -116,8 +116,7 @@ export const RenamePopup = ({ itemId, currentName, onClose }: RenamePopupProps) 
   return (
     <div 
       ref={popupRef}
-      className="absolute z-50 bg-gray-800 border border-blue-500 rounded-lg p-3 shadow-lg min-w-[250px]"
-      style={{ top: '100%', left: 0, marginTop: '4px' }}
+      className="bg-gray-800 border border-blue-500 rounded-lg p-3 shadow-lg min-w-[250px]"
     >
       <div className="flex items-center justify-between mb-2">
         <span className="text-sm font-medium text-blue-400">
