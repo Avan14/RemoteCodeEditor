@@ -1,95 +1,81 @@
-import { useState } from "react";
-import { Folder, ChevronDown, ChevronRight, Plus } from "lucide-react";
-import { FileTree } from "./types";
-import { FileCom } from "./FileCom";
+"use client";
 
-export const FolderCom = ({ data }: { data: FileTree }) => {
+import { useState } from "react";
+import { Folder, ChevronDown, ChevronRight, Plus, Pencil } from "lucide-react";
+import { useFileStore } from "../../../../hooks/useFileStore";
+import { FileCom } from "./FileCom";
+import { AddItemPopup } from "./AddItemPopup";
+import { RenamePopup } from "./RenamePopup";
+
+export const FolderCom = ({ folderId }: { folderId: string }) => {
   const [open, setOpen] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
-  const [newItemName, setNewItemName] = useState("");
-  const [newItemType, setNewItemType] = useState("File");
+  const [showRenamePopup, setShowRenamePopup] = useState(false);
 
-  const add_To_FileTree = () => {
-    setShowPopup(true);
-  };
+  const { files } = useFileStore();
 
-  const handleAddItem = () => {
-    if (!newItemName.trim()) return;
+  const children = files.filter((f) => f.parentId === folderId);
+  const folder = files.find((f) => f.id === folderId);
 
-    const newItem: FileTree = {
-      id: Math.random().toString(36),
-      name: newItemName,
-      type: newItemType as "Folder" | "File",
-      children: [],
-    };
-
-    data.children?.push(newItem);
-    setNewItemName("");
-    setShowPopup(false);
-  };
+  if (!folder) return null;
 
   return (
-    <div>
+    <div className="relative">
       <div
+        className="flex items-center gap-1 cursor-pointer hover:bg-blue-900/50 p-1 rounded group"
         onClick={() => setOpen(!open)}
-        onAuxClick={add_To_FileTree}
-        className="cursor-pointer hover:bg-blue-900/50 p-1 rounded flex gap-1 items-center transition"
       >
-        {open ? (
-          <ChevronDown className="h-4 w-4 text-blue-400" />
-        ) : (
-          <ChevronRight className="h-4 w-4 text-blue-400" />
-        )}
-        <Folder className="h-4 w-4 text-blue-400" />
-        <span className="text-white">{data.name}</span>
-        <Plus
-          className="h-4 w-4 text-white ml-auto cursor-pointer"
-          onClick={add_To_FileTree}
-        />
+        {open ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+        <Folder size={14} />
+        <span>{folder.name}</span>
+        <div className=" ml-auto flex items-center gap-1  group-hover:opacity-100 transition-opacity">
+          <Pencil 
+            size={18}
+            className="text-white opacity-0 group-hover:opacity-100 hover:text-blue-400 p-1 rounded transition-colors" 
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowRenamePopup(true); 
+            }} 
+          />
+          <Plus 
+            size={18}
+            className="text-white  hover:text-blue-400 p-1 rounded transition-colors" 
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowPopup(true);
+            }} 
+          />
+        </div>
       </div>
+
       {open && (
-        <div className="pl-6 border-l border-blue-900 ml-2">
-          {data.children?.map((child) => {
-            if (child.type === "Folder") {
-              return <FolderCom key={child.id} data={child as FileTree} />;
-            } else {
-              return <FileCom key={child.id} data={child as FileTree} />;
-            }
-          })}
+        <div className="pl-4">
+          {children.map((child) =>
+            child.type === "folder" ? (
+              <FolderCom key={child.id} folderId={child.id} />
+            ) : (
+              <FileCom key={child.id} fileId={child.id} />
+            )
+          )}
         </div>
       )}
 
       {showPopup && (
-        <div className="absolute bg-gray-800 p-4 gap-2 items-center text-white flex flex-col bg-gradient-to-br from-[#000000] via-[#0A0A0A] to-[#000000] rounded-lg shadow-md border border-blue-900">
-          <input
-            type="text"
-            placeholder="Enter name"
-            value={newItemName}
-            onChange={(e) => setNewItemName(e.target.value)}
-            className="p-1 rounded text-black"
+        <div className="relative pl-4 mt-1">
+          <AddItemPopup 
+            parentId={folderId}
+            onClose={() => setShowPopup(false)}
           />
-          <select
-            value={newItemType}
-            onChange={(e) => setNewItemType(e.target.value)}
-            className="p-1 rounded text-black ml-2"
-          >
-            <option value="File">File</option>
-            <option value="Folder">Folder</option>
-          </select>
-          <div>
-            <button
-              onClick={handleAddItem}
-              className="bg-blue-500 p-1 rounded ml-2"
-            >
-              Add
-            </button>
-            <button
-              onClick={() => setShowPopup(false)}
-              className="bg-red-500 p-1 rounded ml-2"
-            >
-              Cancel
-            </button>
-          </div>
+        </div>
+      )}
+
+      {showRenamePopup && (
+        <div className="absolute left-0 top-full mt-1 z-50">
+          <RenamePopup
+            itemId={folderId}
+            currentName={folder.name}
+            onClose={() => setShowRenamePopup(false)}
+          />
         </div>
       )}
     </div>
