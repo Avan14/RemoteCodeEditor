@@ -1,16 +1,19 @@
+// FolderCom.tsx
 "use client";
 
 import { useState } from "react";
-import { Folder, ChevronDown, ChevronRight, Plus, Pencil } from "lucide-react";
+import { Folder, ChevronDown, ChevronRight, Plus, Pencil, Trash2 } from "lucide-react";
 import { useFileStore } from "../../../../hooks/useFileStore";
 import { FileCom } from "./FileCom";
 import { AddItemPopup } from "./AddItemPopup";
 import { RenamePopup } from "./RenamePopup";
+import { DeletePopup } from "./DeletePopup";
 
 export const FolderCom = ({ folderId }: { folderId: string }) => {
   const [open, setOpen] = useState(true);
-  const [showPopup, setShowPopup] = useState(false);
+  const [showAddPopup, setShowAddPopup] = useState(false);
   const [showRenamePopup, setShowRenamePopup] = useState(false);
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
 
   const { files } = useFileStore();
 
@@ -37,12 +40,20 @@ export const FolderCom = ({ folderId }: { folderId: string }) => {
               setShowRenamePopup(true); 
             }} 
           />
+          <Trash2
+            size={18}
+            className="text-white opacity-0 group-hover:opacity-100 hover:text-red-400 p-1 rounded transition-colors"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowDeletePopup(true);
+            }}
+          />
           <Plus 
             size={18}
             className="text-white  hover:text-blue-400 p-1 rounded transition-colors" 
             onClick={(e) => {
               e.stopPropagation();
-              setShowPopup(true);
+              setShowAddPopup(true);
             }} 
           />
         </div>
@@ -60,11 +71,11 @@ export const FolderCom = ({ folderId }: { folderId: string }) => {
         </div>
       )}
 
-      {showPopup && (
+      {showAddPopup && (
         <div className="relative pl-4 mt-1">
           <AddItemPopup 
             parentId={folderId}
-            onClose={() => setShowPopup(false)}
+            onClose={() => setShowAddPopup(false)}
           />
         </div>
       )}
@@ -75,6 +86,17 @@ export const FolderCom = ({ folderId }: { folderId: string }) => {
             itemId={folderId}
             currentName={folder.name}
             onClose={() => setShowRenamePopup(false)}
+          />
+        </div>
+      )}
+
+      {showDeletePopup && (
+        <div className="absolute left-0 top-full mt-1 z-50">
+          <DeletePopup
+            itemId={folderId}
+            itemName={folder.name}
+            itemType="folder"
+            onClose={() => setShowDeletePopup(false)}
           />
         </div>
       )}

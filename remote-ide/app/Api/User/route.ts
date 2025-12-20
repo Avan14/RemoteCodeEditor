@@ -1,71 +1,40 @@
-import mongoose from "mongoose";
-import UserModel from "./modals/User";
-import { NextRequest, NextResponse } from "next/server";
-
-// Connect to MongoDB
-async function connectDB() {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI as string);
-    console.log("Connected to MongoDB");
-  } catch (error) {
-    console.error("MongoDB connection error:", error);
-    throw error;
-  }
-}
-await connectDB();
+import { NextRequest, NextResponse } from "next/server"
+import { auth } from "@clerk/nextjs/server"
+import { connectToDB } from "@/server/db/mongoose"
+import { User } from "@/server/models/models"
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const { userId, name } = body;
+  const { userId } = await auth()
 
-  try {
-
-    // Check if user exists
-    const existingUser = await UserModel.findOne({ id: userId });
-    if (existingUser) {
-      return NextResponse.json(existingUser, { status: 200 });
-    }
-
-    // Create new user if not exists
-    const newUser = {
-      id: userId,
-      name: name,
-      projects: [],
-    };
-
-    const createdUser = await UserModel.create(newUser);
-
-    return NextResponse.json(createdUser, { status: 200 });
-  } catch (error) {
-    console.error("Error creating user:", error);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  if (!userId) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
-}
 
+  const body = await req.json().catch(() => ({}))
+  const name = body?.name ?? "User"
 
-// end-point for updating projects in the userd database
-export async function PUT(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { userId, updatedprojects } = body;
+    await connectToDB();
 
-    if (!userId || !Array.isArray(updatedprojects)) {
-      return NextResponse.json({ error: "Invalid data" }, { status: 400 });
+    let user = await User.findOne({ authId: userId })
+
+    if (!user) {
+      user = await User.create({
+        authId: userId,
+        name,
+      })
     }
 
-    const updatedUser = await UserModel.findOneAndUpdate(
-      { id: userId },
-      { $set: { projects: updatedprojects } },
-      { new: true }
-    );
-
-    if (!updatedUser) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
-
-    return NextResponse.json({ message: "User updated", user: updatedUser }, { status: 200 });
+    return NextResponse.json(
+      {
+        id: user._id.toString(),
+        name: user.name,
+        createdAt: user.createdAt,
+      },
+      { status: 201 }
+    )
   } catch (err) {
-    console.error("Error updating user:", err);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    console.error("User init error:", err)
+    return NextResponse.json({ error: "Server error" }, { status: 500 })
   }
 }

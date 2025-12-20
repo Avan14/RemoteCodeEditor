@@ -11,9 +11,7 @@ import { FileExplorer } from "./FileExplorer/FileExplorer";
 import { LiveProvider, LiveEditor, LivePreview, LiveError } from "react-live";
 import React from "react";
 import { default_code } from "@/components/Constants/constants";
-import { FileTree } from "./FileExplorer/types";
-import { useUserdata } from "@/app/context/UserDataContext";
-import { useParams } from "next/navigation";
+
 
 export default function WebDev() {
 

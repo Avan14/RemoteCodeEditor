@@ -1,7 +1,7 @@
 import axios from "axios";
 import { LANGUAGE_VERSIONS } from "./constants";
 
-const ExecuteCodeAPI = axios.create({
+const ExecuteCodeapi = axios.create({
   baseURL: "https://emkc.org/api/v2/piston",
 });
 
@@ -22,7 +22,7 @@ export const ExecuteCode = async (
       version: LANGUAGE_VERSIONS[language],
       files: [{ content: SourceCode }],
     })
-    const response = await ExecuteCodeAPI.post("/execute", {
+    const response = await ExecuteCodeapi.post("/execute", {
       language,
       version: LANGUAGE_VERSIONS[language],
       files: [{ content: SourceCode }],

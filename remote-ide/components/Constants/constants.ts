@@ -136,7 +136,7 @@ export const projectcard_example = [
   },
   {
     id: "4",
-    name: "Task Management API",
+    name: "Task Management api",
     type: "SoftwareDev",
     language: "Node.js",
     date: new Date("2024-03-10"),

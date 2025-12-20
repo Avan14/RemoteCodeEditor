@@ -24,7 +24,7 @@ const Footer = () => {
         {/* Resources */}
         <div className="space-y-3">
           <h3 className="text-lg font-semibold text-white/90">Resources</h3>
-          {['Documentation', 'API Reference', 'Code Snippets', 'Developer Blog', 'Community Forum'].map((item, i) => (
+          {['Documentation', 'api Reference', 'Code Snippets', 'Developer Blog', 'Community Forum'].map((item, i) => (
             <p key={i} className="text-sm text-gray-400 hover:text-blue-400 transition duration-200 cursor-pointer">{item}</p>
           ))}
         </div>

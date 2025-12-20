@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,48 +20,45 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Plus } from "lucide-react";
-import { TProjectCard } from "./types";
-import { languageOptions } from "../CodeEditor/[id]/Header";
 import { useToast } from "@/hooks/use-toast";
-import { randomUUID } from "crypto";
-import { Folder_Example } from "../CodeEditor/[id]/FileExplorer/types";
 
 interface CreateProjectDialogProps {
-  onCreateProject: (project: TProjectCard) => void;
+  onCreateProject: (data: {
+    name: string;
+    track: "WebDevelopment" | "SoftWareDevelopment";
+  }) => void;
 }
 
 export function CreateProjectDialog({
   onCreateProject,
 }: CreateProjectDialogProps) {
-  const { toast } = useToast(); // Toast function
-  const [open, setOpen] = useState(false); // Dialog state
+  const { toast } = useToast();
+  const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
-  const [type, setType] = useState<"SoftwareDev" | "WebDev">("WebDev");
-  const [language, setLanguage] = useState<TProjectCard["language"]>("React");
+  const [track, setTrack] = useState<"WebDevelopment" | "SoftWareDevelopment">(
+    "WebDevelopment"
+  );
 
   const handleSubmit = () => {
-    const newProject = {
-      name,
-      type,
-      date: new Date(),
-      language,
-      folder: Folder_Example
-    };
+    if (!name.trim()) {
+      toast({
+        title: "Invalid name",
+        description: "Project name cannot be empty",
+        variant: "destructive",
+      });
+      return;
+    }
 
-    onCreateProject(newProject);
-    console.log(newProject);
+    onCreateProject({ name, track });
 
-    // Show success toast
     toast({
       title: "Project Created",
-      description: `New project "${name}" added successfully.`,
+      description: `Project "${name}" created successfully.`,
     });
 
-    // Close dialog and reset fields
     setOpen(false);
     setName("");
-    setType("WebDev");
-    setLanguage("React");
+    setTrack("WebDevelopment");
   };
 
   return (
@@ -72,14 +71,15 @@ export function CreateProjectDialog({
           <Plus className="mr-2 h-4 w-4" /> Create Project
         </Button>
       </DialogTrigger>
+
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Create New Project</DialogTitle>
           <DialogDescription>
-            Fill in the details for your new project. Click create when you're
-            done.
+            Provide basic details for your new project.
           </DialogDescription>
         </DialogHeader>
+
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <label htmlFor="name" className="text-right">
@@ -92,57 +92,33 @@ export function CreateProjectDialog({
               className="col-span-3"
             />
           </div>
+
           <div className="grid grid-cols-4 items-center gap-4">
-            <label htmlFor="type" className="text-right">
-              Type
+            <label htmlFor="track" className="text-right">
+              Track
             </label>
             <Select
-              value={type}
-              onValueChange={(value: "SoftwareDev" | "WebDev") =>
-                setType(value)
+              value={track}
+              onValueChange={(value) =>
+                setTrack(value as "WebDevelopment" | "SoftWareDevelopment")
               }
             >
               <SelectTrigger className="col-span-3">
-                <SelectValue placeholder="Select project type" />
+                <SelectValue placeholder="Select project track" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="WebDev">Web Development</SelectItem>
-                <SelectItem value="SoftwareDev">
+                <SelectItem value="WebDevelopment">Web Development</SelectItem>
+                <SelectItem value="SoftWareDevelopment">
                   Software Development
                 </SelectItem>
               </SelectContent>
             </Select>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <label htmlFor="language" className="text-right">
-              Language
-            </label>
-            <Select
-              value={language}
-              onValueChange={(value: TProjectCard["language"]) =>
-                setLanguage(value)
-              }
-            >
-              <SelectTrigger className="col-span-3">
-                <SelectValue placeholder="Select language" />
-              </SelectTrigger>
-              <SelectContent className="h-40">
-                {type === "SoftwareDev" ? (
-                  languageOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))
-                ) : (
-                  <SelectItem value="React">React</SelectItem>
-                )}
-              </SelectContent>
-            </Select>
-          </div>
         </div>
+
         <DialogFooter>
           <Button
-            type="submit"
+            type="button"
             onClick={handleSubmit}
             className="bg-[#0050FF] hover:bg-[#0040CC]"
           >

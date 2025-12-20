@@ -55,8 +55,9 @@ export function Chatbot({ code ,toggleAIHelp}: ChatbotProps) {
 
     setMessages((prev) => [...prev, newMessage]);
 
+    const thinkingId = messages.length + 2;
     const thinkingMessage: Message = {
-      id: messages.length + 2,
+      id: thinkingId,
       text: "Thinking...",
       sender: "ai",
       timestamp: new Date(),
@@ -71,12 +72,12 @@ export function Chatbot({ code ,toggleAIHelp}: ChatbotProps) {
 
     const aiMessage: Message = {
       id: messages.length + 3,
-      text: AIresponse,
+      text: typeof AIresponse === "string" ? AIresponse : String(AIresponse),
       sender: "ai",
       timestamp: new Date(),
     };
 
-    setMessages((prev) => [...prev, aiMessage]);
+    setMessages((prev) => [...prev.filter((m) => m.id !== thinkingId), aiMessage]);
     setInputMessage("");
     setLoading(false);
   };
@@ -128,7 +129,7 @@ export function Chatbot({ code ,toggleAIHelp}: ChatbotProps) {
               >
                 {/* Using ReactMarkdown to render message.*/}
                 <ReactMarkdown className="prose prose-sm">
-                  {message.text}
+                  {typeof message.text === "string" ? message.text : String(message.text)}
                 </ReactMarkdown>
               </div>
               <span className="text-xs text-gray-400 mt-1">

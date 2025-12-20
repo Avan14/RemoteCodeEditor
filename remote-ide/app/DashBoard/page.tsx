@@ -1,29 +1,43 @@
 "use client";
 
-import { useState } from "react";
-import { Search, FileCode2, Command} from "lucide-react";
+import { useEffect, useState } from "react";
+import { Search, FileCode2, Command } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ProjectCard } from "./ProjectCard";
 import { SideBar } from "./sidebar";
 import Link from "next/link";
+import { useUserStore } from "@/hooks/useUserStore";
 import { TProjectCard } from "./types";
-import { projectcard_example } from "@/components/Constants/constants";
-import { useUserdata } from "../context/UserDataContext";
-
 
 export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState("");
-   const { user, setUser } = useUserdata();
-  
-  const [projects, setProjects] = useState<TProjectCard[]>(user?.projects || projectcard_example);
-  
+  const { user, setUser } = useUserStore();
+  // todo
+  const [projects, setProjects] = useState<TProjectCard[]>([]);
+
+  useEffect(() => {
+    const init = async () => {
+      try {
+        const userRes = await fetch("/api/user", { method: "POST" });
+        const userData = await userRes.json();
+        setUser(userData);
+        const projectRes = await fetch("/api/projects");
+        const projectData = await projectRes.json();
+        setProjects(projectData);
+      } catch (err) {
+        console.error("Dashboard init failed:", err);
+      }
+    };
+
+    init();
+  }, [setUser]);
 
   return (
     <div className="h-screen bg-black text-white ">
       {/* Top Navigation */}
       <nav className="border-b border-gray-800 p-4 h-1/8 bg-black">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="px-10 mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <FileCode2 className="h-6 w-6 text-blue-500" />
             <Link href={"/"}>

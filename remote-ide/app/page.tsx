@@ -2,7 +2,7 @@
 
 import Footer from "@/components/elements/Footer";
 import Hero from "@/components/elements/Hero";
-import Hero_4  from "@/components/elements/Hero2";
+import Hero_4 from "@/components/elements/Hero2";
 import Hero_3 from "@/components/elements/Hero4";
 import Hero_1 from "@/components/elements/Hero5";
 import Hero_2 from "@/components/elements/Hero7";

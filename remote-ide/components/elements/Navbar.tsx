@@ -9,16 +9,16 @@ import Link from "next/link";
 import { useClerk, useUser } from "@clerk/nextjs";
 import { useState, useEffect } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useUserdata } from "../../app/context/UserDataContext";
 import axios from "axios";
-import { User, User2Icon } from "lucide-react";
+import { User2Icon } from "lucide-react";
+import { useUserStore } from "@/hooks/useUserStore";
 
 export default function Navbar() {
   const clerk = useClerk();
   const [showRedirectPopup, setShowRedirectPopup] = useState(false);
   const [showWelcomePopup, setShowWelcomePopup] = useState(false);
   const { user: clerkUser, isSignedIn } = useUser();
-  const { user: contextUser, setUser } = useUserdata();
+  const { user, setUser, clearUser } = useUserStore();
 
   const handleStartBuilding = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!isSignedIn) {
@@ -32,11 +32,10 @@ export default function Navbar() {
   };
 
   const DBcall = async () => {
-    console.log("🔥 DBcall triggered");
+    console.log("DBcall triggered");
     try {
       if (clerkUser && clerkUser.id) {
-        const response = await axios.post("/Api/User", {
-          userId: clerkUser.id,
+        const response = await axios.post("/api/user", {
           name: clerkUser.firstName,
         });
 
@@ -52,6 +51,7 @@ export default function Navbar() {
 
   const logouthandler = async () => {
     try {
+      clearUser();
       await clerk.signOut();
     } catch (error) {
       console.error("Error signing out:", error);
@@ -61,7 +61,7 @@ export default function Navbar() {
   useEffect(() => {
     const runEffect = async () => {
       if (isSignedIn) {
-        await DBcall(); 
+        await DBcall();
         setShowWelcomePopup(true);
         setTimeout(() => setShowWelcomePopup(false), 1000);
       }
@@ -77,7 +77,7 @@ export default function Navbar() {
       <nav className="flex justify-between items-center bg-black px-6 py-4 text-white z-50 border-b-2 border-gray-800 sticky top-0">
         <div className="flex items-center space-x-2">
           <span className="text-5xl font-bolder text-[#1E90FF] font-[Redwing-M] px-3">
-          CODEPULSE
+            CODEPULSE
           </span>
 
           <DropdownMenu>
@@ -141,7 +141,9 @@ export default function Navbar() {
               <DropdownMenuTrigger asChild>
                 <Button className="bg-black w-6">
                   <Avatar className="w-9 h-9 text-black text-xl">
-                    <AvatarFallback><User2Icon></User2Icon></AvatarFallback>
+                    <AvatarFallback>
+                      <User2Icon></User2Icon>
+                    </AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>

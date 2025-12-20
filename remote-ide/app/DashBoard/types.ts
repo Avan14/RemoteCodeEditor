@@ -1,13 +1,17 @@
-import { FILE_NAMES } from "@/components/Constants/constants"
-
-type FILE_NAMES_type = typeof FILE_NAMES
+// types 
 
 export type TProjectCard = {
-    name: string,
-    type: string,
-    date: Date,
-    language: string
+  id: string
+  name: string
+  slug?: string
+  track: 'WebDevelopment' | 'SoftWareDevelopment'
+  createdAt: string
 }
 
+// interfaces
 
-  
+export interface SideBarProps {
+  Projects: TProjectCard[]
+  SetProjects: React.Dispatch<React.SetStateAction<TProjectCard[]>>
+  TriggerRefresh?: () => void
+}

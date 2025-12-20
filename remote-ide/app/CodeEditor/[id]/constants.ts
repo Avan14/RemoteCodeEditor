@@ -1,3 +1,9 @@
+export const DEFAULT_TEXT_FOR_FILE = "Terminal output will appear here..."
+export const DEFAULT_WARNING_UNKNOWN_FILES = "Warning: Unsupported or missing file extension. This file will be treated as plain text and cannot be run."
+export const PLAINTEXT ="plaintext"
+export const OPEN_FILE_WARNNING ="Please open a file."
+export const RUN_OPEN_FILE_WARNNING ="Please open a file and write some code"
+
 export const LANGUAGE_VERSIONS = {
   cpp: "10.2.0",
   javascript: "18.15.0",
@@ -12,12 +18,13 @@ export const LANGUAGE_VERSIONS = {
   kotlin: "1.8.20",
   swift: "5.3.3",
   sqlite3: "3.36.0",
-  c:"10.2.0",
+  c: "10.2.0",
   powershell: "7.1.4",
   bash: "5.2.0",
   matl: "22.7.4",
   dart: "2.19.6",
 };
+
 export const CODE_SNIPPETS = {
   cpp: `#include <iostream>\n\nint main() {\n\tstd::cout << "Hello, Avan!" << std::endl;\n\treturn 0;\n}\n`,
   javascript: `function greet(name) {\n\tconsole.log("Hello, " + name + "!");\n}\n\ngreet("Avan");\n`,
@@ -40,27 +47,27 @@ export const CODE_SNIPPETS = {
 };
 
 export const FILE_NAMES = {
-  cpp: "program.cpp",            
-  javascript: "app.js",          
-  python: "script.py",          
-  java: "MainClass.java",        
-  csharp: "Program.cs",         
-  typescript: "app.ts",          
-  php: "index.php",           
-  go: "main.go",                 
-  ruby: "program.rb",            
-  rust: "main.rs",               
-  kotlin: "Application.kt",     
-  swift: "App.swift",            
-  sqlite3: "queries.sql",        
-  c: "main.c",                 
-  powershell: "script.ps1",     
-  bash: "script.sh",            
-  matl: "function.m",         
-  dart: "main.dart",            
+  cpp: "program.cpp",
+  javascript: "app.js",
+  python: "script.py",
+  java: "MainClass.java",
+  csharp: "Program.cs",
+  typescript: "app.ts",
+  php: "index.php",
+  go: "main.go",
+  ruby: "program.rb",
+  rust: "main.rs",
+  kotlin: "Application.kt",
+  swift: "App.swift",
+  sqlite3: "queries.sql",
+  c: "main.c",
+  powershell: "script.ps1",
+  bash: "script.sh",
+  matl: "function.m",
+  dart: "main.dart",
 };
 
-export const THEMES=[
+export const THEMES = [
   "vs-dark",
   "vs-light",
   "hc-black"

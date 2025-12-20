@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import {
-  Plus,
   Home,
   Code2,
   Rocket,
@@ -12,36 +11,37 @@ import {
   Layout,
 } from "lucide-react";
 import { CreateProjectDialog } from "./CreateProject";
-import { TProjectCard } from "./types";
-import { useUserdata } from "../context/UserDataContext";
-import axios from "axios";
+import { SideBarProps, TProjectCard } from "./types";
 
-export const SideBar = ({ SetProjects, Projects }: any) => {
-  const { user: contextUser, setUser } = useUserdata();
-
-  const handleCreateProject = async (project: TProjectCard) => {
+export const SideBar = ({
+  SetProjects,
+  Projects,
+  TriggerRefresh,
+}: SideBarProps) => {
+  const handleCreateProject = async (data: {
+    name: string;
+    track: "WebDevelopment" | "SoftWareDevelopment";
+  }) => {
     try {
-      const newProjects = [...Projects, project];
-      SetProjects(newProjects);
-
-      const response = await axios.put("/Api/User", {
-        userId: contextUser?.id,
-        updatedprojects: newProjects,
+      const res = await fetch("/api/projects", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
 
-      if (response.data?.user) {
-        setUser(response.data.user);
-        console.log(response.data.user);
+      if (!res.ok) {
+        throw new Error("Project creation failed");
       }
-    } catch (error) {
-      console.error("Error updating user projects:", error);
-      alert("Failed to update projects. Please try again.");
+      const project: TProjectCard = await res.json();
+      SetProjects((prev) => [project, ...prev]);
+      TriggerRefresh?.();
+    } catch (err) {
+      console.error("Create project error:", err);
     }
   };
 
   return (
     <aside className="relative w-64 h-[calc(100vh-4rem)] p-4 bg-black/30 border-r border-[#1a1a1a] backdrop-blur-lg shadow-inner shadow-[#0050FF]/5 overflow-hidden group">
-      {/* Shine hover animation */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-transparent via-[#0050FF]/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
 
       <div className="relative z-10 flex flex-col h-full justify-between">
@@ -59,7 +59,7 @@ export const SideBar = ({ SetProjects, Projects }: any) => {
               <Button
                 key={item.label}
                 variant="ghost"
-                className="w-full justify-start text-gray-300 hover:text-white hover:bg-[#151B28]/80 transition-all duration-200 rounded-xl"
+                className="w-full justify-start text-gray-300 hover:text-white hover:bg-[#151B28]/80 rounded-xl"
               >
                 <item.icon className="mr-2 h-4 w-4 text-[#0050FF]" />
                 {item.label}
@@ -78,7 +78,7 @@ export const SideBar = ({ SetProjects, Projects }: any) => {
               <Button
                 key={item.label}
                 variant="ghost"
-                className="w-full justify-start text-gray-300 hover:text-white hover:bg-[#151B28]/80 transition-all duration-200 rounded-xl"
+                className="w-full justify-start text-gray-300 hover:text-white hover:bg-[#151B28]/80 rounded-xl"
               >
                 <item.icon className="mr-2 h-4 w-4 text-[#0050FF]" />
                 {item.label}
@@ -87,9 +87,9 @@ export const SideBar = ({ SetProjects, Projects }: any) => {
           </div>
         </div>
 
-        {/* Optional: Floating icon or tagline */}
         <div className="text-sm text-gray-500 text-center mt-6">
-          Code with <span className="text-[#0050FF] font-semibold">Pulse ⚡</span>
+          Code with{" "}
+          <span className="text-[#0050FF] font-semibold">Pulse ⚡</span>
         </div>
       </div>
     </aside>

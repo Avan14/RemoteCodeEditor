@@ -41,7 +41,7 @@ const Hero2 = () => {
                     arr.size() - <span className="text-purple-400">1</span>;
                     {"\n\n"}
                       <span className="text-emerald-400">while</span> (left
-                    &gt;= right) {"{\n"}
+                    &lt;= right) {"{\n"}
                         <span className="text-emerald-400">int</span> mid = left
                     + (right - left) /{" "}
                     <span className="text-purple-400">2</span>;{"\n\n"}

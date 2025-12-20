@@ -1,12 +1,10 @@
+// RenamePopup.tsx
+
 "use client";
 
 import { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import { useFileStore } from "../../../../hooks/useFileStore";
-
-// Invalid characters for file/folder names (Windows + Unix)
-const INVALID_CHARS = /[<>:"/\\|?*\x00-\x1f]/;
-const INVALID_NAMES = ['CON', 'PRN', 'AUX', 'NUL', 'COM1', 'COM2', 'COM3', 'COM4', 'COM5', 'COM6', 'COM7', 'COM8', 'COM9', 'LPT1', 'LPT2', 'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7', 'LPT8', 'LPT9'];
 
 interface RenamePopupProps {
   itemId: string;
@@ -54,58 +52,18 @@ export const RenamePopup = ({ itemId, currentName, onClose }: RenamePopupProps) 
   const item = files.find(f => f.id === itemId);
   if (!item) return null;
 
-  const parentId = item.parentId;
-  const siblings = files.filter(f => f.parentId === parentId && f.id !== itemId);
-
-  const validateName = (fileName: string): string | null => {
-    const trimmed = fileName.trim();
-    
-    if (!trimmed) {
-      return "Name cannot be empty";
-    }
-
-    if (trimmed.length > 255) {
-      return "Name is too long (max 255 characters)";
-    }
-
-    if (INVALID_CHARS.test(trimmed)) {
-      return "Name contains invalid characters: < > : \" / \\ | ? * and control characters";
-    }
-
-    // Check for invalid Windows names
-    const nameUpper = trimmed.toUpperCase();
-    if (INVALID_NAMES.includes(nameUpper) || INVALID_NAMES.some(invalid => nameUpper.startsWith(invalid + '.'))) {
-      return "This name is reserved and cannot be used";
-    }
-
-    // Check for leading/trailing spaces or dots (Windows)
-    if (trimmed.startsWith('.') || trimmed.endsWith('.') || trimmed.endsWith(' ')) {
-      return "Name cannot start with a dot or end with a dot or space";
-    }
-
-    // Check for duplicate names in the same folder
-    const siblingNames = siblings.map(c => c.name.toLowerCase());
-    if (siblingNames.includes(trimmed.toLowerCase())) {
-      return "A file or folder with this name already exists";
-    }
-
-    return null;
-  };
-
   const handleRename = () => {
     if (name.trim() === currentName) {
       onClose();
       return;
     }
 
-    const validationError = validateName(name);
-    
-    if (validationError) {
-      setError(validationError);
+    const result = renameFile(itemId, name);
+    if (!result.ok) {
+      setError(result.error);
       return;
     }
 
-    renameFile(itemId, name.trim());
     onClose();
   };
 
