@@ -126,7 +126,8 @@ type FileStore = {
     updateFileLanguage: (fileId: string, language: string) => void;
     renameFile: (fileId: string, newName: string) => ActionResult;
     deleteNode: (nodeId: string) => ActionResult;
-    hydrateFromBackend: (tree: BackendTreeNode) => void
+    hydrateFromBackend: (tree: BackendTreeNode) => void;
+    reset: () => void;
 };
 
 function collectDescendantIds(files: FileNode[], nodeId: string): string[] {
@@ -294,6 +295,10 @@ export const useFileStore = create<FileStore>()(
                     files: flattened,
                     activeFileId: null,
                 })
+            },
+
+            reset: () => {
+                set({ files: [], activeFileId: null })
             }
         }),
         {

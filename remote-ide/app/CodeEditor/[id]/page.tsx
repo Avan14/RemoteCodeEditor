@@ -24,10 +24,13 @@ import { useEditorStore } from "@/hooks/useEditorStore";
 import { useParams } from "next/navigation";
 
 export default function CodeEditor() {
+
   const editorRef = useRef<any>(null);
   const [output, setOutput] = useState(DEFAULT_TEXT_FOR_FILE);
   const [error, setError] = useState(false);
+
   const activeFileId = useFileStore((state) => state.activeFileId);
+  const resetFileStore = useFileStore(s => s.reset);
   const files = useFileStore((state) => state.files);
   const hydrateFromBackend = useFileStore((state) => state.hydrateFromBackend);
 
@@ -35,11 +38,11 @@ export default function CodeEditor() {
   const { id: projectId } = useParams<{ id: string }>();
 
   const code = activeFileId ? contents[activeFileId] ?? "" : "";
-
   // Get the active file
   const activeFile = activeFileId
     ? files.find((f) => f.id === activeFileId)
     : null;
+
 
   function handleEditorDidMount(editor: any) {
     editorRef.current = editor;
@@ -81,6 +84,8 @@ export default function CodeEditor() {
 
   useEffect(() => {
     if (!projectId) return;
+
+    resetFileStore(); // flush old folder structure
 
     const loadProject = async () => {
       try {
